@@ -15,7 +15,3 @@ spec:
         kind: HelmRepository
         name: metallb-system
         namespace: metallb-system
-  valuesFrom:
-    - kind: ConfigMap
-      name: metallb-values
-      valuesKey: values.yaml
