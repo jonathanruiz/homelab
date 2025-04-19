@@ -39,7 +39,7 @@ spec:
 
     ingressRoute:
       dashboard:
-        enabled: true
+        enabled: false
 
     rbac:
       enabled: true
