@@ -24,16 +24,16 @@ spec:
       - "--entrypoints.web.address=:80" # Enable HTTP entrypoint
       - "--entrypoints.websecure.address=:443" # Enable HTTPS entrypoint
       - "--log.level=INFO" # Set log level to INFO
-  entryPoints: # New entryPoints configuration starting from Traefik v35.0.0
-    web:
-      address: ":80"
-      http:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-    websecure:
-      address: ":443"
+    entryPoints: # New entryPoints configuration starting from Traefik v35.0.0
+      web:
+        address: ":80"
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+      websecure:
+        address: ":443"
     ingressRoute:
       dashboard:
         enabled: true
