@@ -40,7 +40,7 @@ spec:
       type: LoadBalancer
       annotations: {}
       labels: {}
-      spec:
-        - loadBalancerIP: "10.100.0.11-10.100.0.12"
-      loadBalancerSourceRanges: {}
+      loadBalancerIP: "10.100.0.11-10.100.0.12"
+      loadBalancerSourceRanges:
+        - 0.0.0.0/0
       externalIPs: []
