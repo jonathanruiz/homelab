@@ -19,11 +19,13 @@ spec:
     globalArguments:
       - "--global.checknewversion=false" # Disable version check
       - "--global.sendanonymoususage=false" # Disable anonymous usage statistics
+
     additionalArguments:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
       - "--entrypoints.web.address=:80" # Enable HTTP entrypoint
       - "--entrypoints.websecure.address=:443" # Enable HTTPS entrypoint
       - "--log.level=INFO" # Set log level to INFO
+
     entryPoints: # New entryPoints configuration starting from Traefik v35.0.0
       web:
         address: ":80"
@@ -34,11 +36,14 @@ spec:
               scheme: https
       websecure:
         address: ":443"
+
     ingressRoute:
       dashboard:
         enabled: true
+
     rbac:
       enabled: true
+
     service:
       enabled: true
       type: LoadBalancer
