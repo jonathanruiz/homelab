@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  interval: 5m
+  releaseName: traefik
+  targetNamespace: traefik
+  chart:
+    spec:
+      chart: traefik
+      version: 35.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: traefik
+  values:
+    globalArguments:
+      - "--global.checknewversion=false" # Disable version check
+      - "--global.sendanonymoususage=false" # Disable anonymous usage statistics
+    additionalArguments:
+      - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
+      - "--entrypoints.web.address=:80" # Enable HTTP entrypoint
+      - "--entrypoints.websecure.address=:443" # Enable HTTPS entrypoint
+      - "--log.level=INFO" # Set log level to INFO
+    ports:
+      web:
+        redirectTo: websecure
+      websecure:
+        tls:
+          enabled: true
+    ingressRoute:
+      dashboard:
+        enabled: true
+    rbac:
+      enabled: true
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations: {}
+      labels: {}
+      spec:
+        loadBalancerIP: "10.100.0.11-10.100.0.12"
+      loadBalancerSourceRanges: {}
+      externalIPs: []
