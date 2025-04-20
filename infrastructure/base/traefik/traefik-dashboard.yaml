@@ -13,5 +13,3 @@ spec:
       services:
         - name: api@internal
           kind: TraefikService
-  tls:
-    passthrough: false # added for testing
