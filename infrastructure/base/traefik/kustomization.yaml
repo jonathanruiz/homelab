@@ -3,4 +3,4 @@ resources:
   - helmrepository.yaml
   - traefik-crds.yaml
   - helmrelease.yaml
-  - traefik-dashboard-ingressroute.yaml
+  - traefik-dashboard.yaml
