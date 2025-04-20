@@ -24,15 +24,24 @@ spec:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
       - "--log.level=INFO" # Set log level to INFO
 
-    entryPoints: # New entryPoints configuration starting from Traefik v35.0.0
+    ports:
       web:
-        address: ":80"
-      websecure:
-        address: ":443"
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
 
     ingressRoute:
       dashboard:
         enabled: true
+        entryPoints: [web, websecure]
+        routes:
+          - match: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+            kind: Rule
+            services:
+              - name: api@internal
+                kind: TraefikService
 
     rbac:
       enabled: true
