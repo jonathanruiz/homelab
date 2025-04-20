@@ -1,3 +1,5 @@
 resources:
+  - namespace.yaml
+  - helmrepositry.yaml
   - helmrelease.yaml
   - traefik-dashboard.yaml
