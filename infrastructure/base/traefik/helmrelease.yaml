@@ -22,19 +22,11 @@ spec:
 
     additionalArguments:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
-      - "--entrypoints.web.address=:80" # Enable HTTP entrypoint
-      - "--entrypoints.websecure.address=:443" # Enable HTTPS entrypoint
       - "--log.level=INFO" # Set log level to INFO
 
     entryPoints: # New entryPoints configuration starting from Traefik v35.0.0
       web:
         address: ":80"
-        # Disabling for testing since I don't have a valid certificate
-        # http:
-        #   redirections:
-        #     entryPoint:
-        #       to: websecure
-        #       scheme: https
       websecure:
         address: ":443"
 
@@ -51,6 +43,4 @@ spec:
       annotations: {}
       labels: {}
       loadBalancerIP: "10.100.0.28"
-      # loadBalancerSourceRanges:
-      #   - 0.0.0.0/0
       externalIPs: []
