@@ -1,3 +1,4 @@
 resources:
   - metallb-system
+  - traefik-crds
   - traefik
