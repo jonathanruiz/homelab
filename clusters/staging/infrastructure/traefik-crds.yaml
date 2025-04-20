@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./infrastructure/base/traefik
+  path: ./infrastructure/base/traefik-crds
   prune: true
   sourceRef:
     kind: GitRepository
@@ -13,5 +13,3 @@ spec:
   targetNamespace: traefik
   wait: true
   timeout: 2m
-  includes:
-    - "traefik-crds.yaml"
