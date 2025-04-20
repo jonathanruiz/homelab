@@ -1,6 +1,6 @@
 resources:
   - namespace.yaml
-  - traefik-crds.yaml
   - helmrepository.yaml
+  - traefik-crds.yaml
   - helmrelease.yaml
   - traefik-dashboard-ingressroute.yaml
