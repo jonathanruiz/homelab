@@ -6,14 +6,18 @@ spec:
   provider:
     azurekv:
       tenantId:
-        name: azure-secret-creds
-        key: tenantId
+        valueFrom:
+          secretKeyRef:
+            name: azure-secret-creds
+            namespace: external-secrets
+            key: tenantId
       clientId:
-        name: azure-secret-creds
-        key: clientId
+        valueFrom:
+          secretKeyRef:
+            name: azure-secret-creds
+            namespace: external-secrets
+            key: clientId
       clientSecret:
         name: azure-secret-creds
         key: clientSecret
-      akvUrl:
-        name: azure-secret-creds
-        key: akvUrl
+      akvUrl: "https://k8s-homelab.vault.azure.net/"
