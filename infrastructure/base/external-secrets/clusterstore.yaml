@@ -1,0 +1,27 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterSecretStore
+metadata:
+  name: azure-keyvault
+spec:
+  provider:
+    azurekv:
+      tenantId:
+        valueFrom:
+          secretKeyRef:
+            name: azure-secret-creds
+            namespace: external-secrets
+            key: tenantId
+      clientId:
+        valueFrom:
+          secretKeyRef:
+            name: azure-secret-creds
+            namespace: external-secrets
+            key: clientId
+      clientSecret:
+        name: azure-secret-creds
+        key: clientSecret
+      vaultUrl:
+        valueFrom:
+          name: azure-secret-creds
+          namespace: external-secrets
+          key: akvUrl
