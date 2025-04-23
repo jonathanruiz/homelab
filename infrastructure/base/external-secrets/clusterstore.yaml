@@ -5,6 +5,8 @@ metadata:
 spec:
   provider:
     azurekv:
+      authType: "ServicePrincipal"
+      vaultUrl: "https://k8s-homelab.vault.azure.net/"
       tenantId:
         valueFrom:
           secretKeyRef:
@@ -20,4 +22,3 @@ spec:
       clientSecret:
         name: azure-secret-creds
         key: clientSecret
-      akvUrl: "https://k8s-homelab.vault.azure.net/"
