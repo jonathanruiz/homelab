@@ -16,7 +16,7 @@ spec:
           name: azure-creds
           key: clientSecret
           namespace: external-secrets
-        tenantId:
+        tenantID:
           name: azure-creds
           key: tenantId
           namespace: external-secrets
