@@ -1,0 +1,5 @@
+# clusters/staging/external-secrets/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-secrets
