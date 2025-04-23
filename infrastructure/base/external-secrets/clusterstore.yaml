@@ -10,10 +10,10 @@ spec:
       tenantId: "1af28687-4561-4bfa-b57a-a6569f9c88f3"
       authSecretRef:
         clientId:
-          name: azure-creds
+          name: azure-secret-creds
           key: clientId
           namespace: external-secrets
         clientSecret:
-          name: azure-creds
+          name: azure-secret-creds
           key: clientSecret
           namespace: external-secrets
