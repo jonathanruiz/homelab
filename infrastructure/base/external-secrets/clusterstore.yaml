@@ -7,18 +7,16 @@ spec:
     azurekv:
       authType: "ServicePrincipal"
       vaultUrl: "https://k8s-homelab.vault.azure.net/"
-      tenantId:
-        valueFrom:
-          secretKeyRef:
-            name: azure-secret-creds
-            namespace: external-secrets
-            key: tenantId
-      clientId:
-        valueFrom:
-          secretKeyRef:
-            name: azure-secret-creds
-            namespace: external-secrets
-            key: clientId
-      clientSecret:
-        name: azure-secret-creds
-        key: clientSecret
+      authSecretRef:
+        clientId:
+          name: azure-creds
+          key: clientId
+          namespace: external-secrets
+        clientSecret:
+          name: azure-creds
+          key: clientSecret
+          namespace: external-secrets
+        tenantId:
+          name: azure-creds
+          key: tenantId
+          namespace: external-secrets
