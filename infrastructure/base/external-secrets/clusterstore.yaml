@@ -6,22 +6,14 @@ spec:
   provider:
     azurekv:
       tenantId:
-        valueFrom:
-          secretKeyRef:
-            name: azure-secret-creds
-            namespace: external-secrets
-            key: tenantId
+        name: azure-secret-creds
+        key: tenantId
       clientId:
-        valueFrom:
-          secretKeyRef:
-            name: azure-secret-creds
-            namespace: external-secrets
-            key: clientId
+        name: azure-secret-creds
+        key: clientId
       clientSecret:
         name: azure-secret-creds
         key: clientSecret
-      vaultUrl:
-        valueFrom:
-          name: azure-secret-creds
-          namespace: external-secrets
-          key: akvUrl
+      akvUrl:
+        name: azure-secret-creds
+        key: akvUrl
