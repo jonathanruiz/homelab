@@ -14,6 +14,9 @@ spec:
         name: cert-manager
         namespace: cert-manager
   values:
-    installCRDs: true
+    # According to the cert-manager Helm chart values, this is new way to enable the CRDs
+    crds:
+      enabled: true
+      keep: true
     prometheus:
       enabled: false
