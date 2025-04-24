@@ -11,7 +11,7 @@ spec:
       version: v1.17.1
       sourceRef:
         kind: HelmRepository
-        name: cert-manager
+        name: jetstack
         namespace: cert-manager
   values:
     # According to the cert-manager Helm chart values, this is new way to enable the CRDs
