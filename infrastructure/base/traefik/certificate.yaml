@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-cert
+  namespace: traefik
+spec:
+  secretName: traefik-tls
+  dnsNames:
+    - traefik.local.ruizops.com
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer

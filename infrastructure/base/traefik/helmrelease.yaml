@@ -35,13 +35,16 @@ spec:
     ingressRoute:
       dashboard:
         enabled: true
-        entryPoints: [web, websecure]
+        entryPoints:
+          - websecure
         routes:
-          - match: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+          - match: Host(`traefik.local.ruizops.com`)
             kind: Rule
             services:
               - name: api@internal
                 kind: TraefikService
+        tls:
+          secretName: traefik-tls
 
     rbac:
       enabled: true
