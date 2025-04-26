@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./infrastructure/base/grafana
+  path: ./apps/base/grafana
   prune: true
   sourceRef:
     kind: GitRepository
