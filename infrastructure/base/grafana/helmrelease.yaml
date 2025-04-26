@@ -15,16 +15,3 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: grafana
-  values:
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-      hosts:
-        - host: grafana.local.ruizops.com
-          paths:
-            - path: /
-      # tls:
-      #   - hosts:
-      #       - grafana.example.com
-      #     secretName: grafana-tls
