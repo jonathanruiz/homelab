@@ -9,4 +9,4 @@ spec:
     - grafana.local.ruizops.com
   issuerRef:
     name: letsencrypt-dns
-    kind: ClusterIssuers
+    kind: ClusterIssuer
