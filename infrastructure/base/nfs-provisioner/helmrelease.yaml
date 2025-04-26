@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfs-client
+  namespace: nfs-provisioner
+spec:
+  affinity: {}
+
+  image:
+    pullPolicy: IfNotPresent
+    repository: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner
+    tag: v4.0.2
+
+  imagePullSecrets: []
+
+  labels: {}
+
+  leaderElection:
+    enabled: true
+
+  nfs:
+    path: /volume1/k8s
+    reclaimPolicy: Retain
+    server: 10.100.0.15
+    volumeName: nfs-subdir-external-provisioner-root
+
+  nodeSelector:
+    kubernetes.io/os: linux
+
+  podAnnotations: {}
+
+  podDisruptionBudget:
+    enabled: false
+    maxUnavailable: 1
+
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
+
+  podSecurityPolicy:
+    enabled: false
+
+  rbac:
+    create: true
+
+  replicaCount: 3
+
+  resources: {}
+
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: false
+
+  serviceAccount:
+    annotations: {}
+    create: true
+
+  storageClass:
+    accessModes: ReadWriteOnce
+    allowVolumeExpansion: true
+    annotations: {}
+    archiveOnDelete: true
+    create: true
+    defaultClass: true
+    name: nfs-client
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
+
+  strategyType: Recreate
+
+  tolerations: []
