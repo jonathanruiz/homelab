@@ -1,5 +1,5 @@
 resources:
   - namespace.yaml
   - helmrepository.yaml
-  - helmrelease.yaml
-  - clusterstore.yaml
+  # - helmrelease.yaml
+  # - clusterstore.yaml
