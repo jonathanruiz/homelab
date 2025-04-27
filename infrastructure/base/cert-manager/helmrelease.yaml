@@ -4,8 +4,6 @@ metadata:
   name: cert-manager-release
   namespace: cert-manager
 spec:
-  dependsOn:
-    - name: jetstack
   interval: 5m
   chart:
     spec:
