@@ -3,4 +3,4 @@ resources:
   - helmrepository.yaml
   - deploy-crds.yaml # https://external-secrets.io/latest/examples/gitops-using-fluxcd/#deploy-the-crds
   - helmrelease.yaml
-  - clusterstore.yaml
+  - deploy-crs.yaml # https://external-secrets.io/latest/examples/gitops-using-fluxcd/#deploy-the-custom-resources
