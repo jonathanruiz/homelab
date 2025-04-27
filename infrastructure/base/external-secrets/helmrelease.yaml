@@ -6,7 +6,7 @@ metadata:
 spec:
   releaseName: external-secrets
   namespace: external-secrets
-  interval: 5m
+  interval: 3m
   chart:
     spec:
       chart: external-secrets
