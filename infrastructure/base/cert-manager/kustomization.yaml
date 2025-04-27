@@ -1,6 +1,6 @@
 resources:
   - namespace.yaml
   - helmrepository.yaml
-  # - helmrelease.yaml
-  # - cluster-issuer.yaml
-  # - external-secret.yaml
+  - helmrelease.yaml
+  - cluster-issuer.yaml
+  - external-secret.yaml
