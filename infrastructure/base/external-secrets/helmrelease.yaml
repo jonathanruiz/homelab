@@ -4,14 +4,20 @@ metadata:
   name: external-secrets
   namespace: external-secrets
 spec:
+  releaseName: external-secrets
+  namespace: external-secrets
   interval: 5m
   chart:
     spec:
       chart: external-secrets
-      version: "0.16.1" # replace with latest if needed
+      version: 0.16.1
       sourceRef:
         kind: HelmRepository
         name: external-secrets
         namespace: external-secrets
   values:
-    installCRDs: true
+    installCRDs: false
+
+  # Ref: https://fluxcd.io/flux/components/helm/api/v2/#helm.toolkit.fluxcd.io/v2.Install
+  install:
+    createNamespace: true

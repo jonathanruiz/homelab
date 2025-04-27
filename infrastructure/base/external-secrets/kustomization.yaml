@@ -1,5 +1,6 @@
 resources:
   - namespace.yaml
   - helmrepository.yaml
-  # - helmrelease.yaml
-  # - clusterstore.yaml
+  - deploy-crds.yaml # https://external-secrets.io/latest/examples/gitops-using-fluxcd/#deploy-the-crds
+  - helmrelease.yaml
+  - clusterstore.yaml
