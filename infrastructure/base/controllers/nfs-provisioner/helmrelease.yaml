@@ -32,7 +32,7 @@ spec:
     nfs:
       path: /volume1/k8s
       reclaimPolicy: Retain
-      server: 10.100.0.15
+      server: 10.0.10.30
       volumeName: nfs-subdir-external-provisioner-root
 
     nodeSelector:
