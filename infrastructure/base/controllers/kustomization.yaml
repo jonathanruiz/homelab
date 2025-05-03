@@ -1,5 +1,5 @@
 resources:
-  - metallb-system
+  - metallb
   - traefik
   - external-secrets
   - cert-manager
