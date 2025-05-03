@@ -54,5 +54,5 @@ spec:
       type: LoadBalancer
       annotations: {}
       labels: {}
-      loadBalancerIP: "10.100.0.28"
+      loadBalancerIP: "10.0.50.2"
       externalIPs: []
