@@ -15,7 +15,7 @@ spec:
         name: external-secrets
         namespace: external-secrets
   values:
-    installCRDs: false
+    installCRDs: true
 
   # Ref: https://fluxcd.io/flux/components/helm/api/v2/#helm.toolkit.fluxcd.io/v2.Install
   install:

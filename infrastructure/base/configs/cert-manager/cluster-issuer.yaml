@@ -4,8 +4,6 @@ metadata:
   name: letsencrypt-dns
   namespace: cert-manager
 spec:
-  dependsOn:
-    - name: cert-manager-release
   acme:
     email: info@ruizops.com
     server: https://acme-staging-v02.api.letsencrypt.org/directory # testing with staging server in order to avoid rate limits
