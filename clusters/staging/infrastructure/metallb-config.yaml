@@ -1,0 +1,15 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb-config
+  namespace: flux-system
+spec:
+  path: ./infrastructure/base/configs/metallb
+  prune: true
+  interval: 10m
+  wait: true
+  dependsOn:
+    - name: metallb-controller
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
