@@ -8,16 +8,11 @@ spec:
     - websecure
     - web
   routes:
-    - match: PathPrefix(`/`)
+    - match: Host(`grafana.local.ruizops.com`)
       kind: Rule
       services:
-        - name: api@internal
-          kind: TraefikService
-    # - match: Host(`grafana.local.ruizops.com`)
-    #   kind: Rule
-    #   services:
-    # - name: grafana
-    #   port: 80
+        - name: grafana
+          port: 80
 
-  # tls:
-  #   secretName: grafana-tls
+  tls:
+    secretName: grafana-tls
