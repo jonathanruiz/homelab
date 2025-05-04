@@ -43,8 +43,8 @@ spec:
             services:
               - name: api@internal
                 kind: TraefikService
-        # tls:
-        #   secretName: traefik-tls
+        tls:
+          secretName: traefik-tls
 
     rbac:
       enabled: true
@@ -54,5 +54,5 @@ spec:
       type: LoadBalancer
       annotations: {}
       labels: {}
-      loadBalancerIP: "10.0.50.2"
+      loadBalancerIP: "10.0.10.200"
       externalIPs: []
