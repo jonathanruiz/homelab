@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: metallb-system
         namespace: metallb-system
-  speaker:
-    memberlist:
-      enabled: false
+  values:
+    speaker:
+      memberlist:
+        enabled: false
