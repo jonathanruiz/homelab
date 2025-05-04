@@ -6,11 +6,18 @@ metadata:
 spec:
   entryPoints:
     - websecure
+    - web
   routes:
-    - match: Host(`grafana.local.ruizops.com`)
+    - match: PathPrefix(`/`)
       kind: Rule
       services:
-        - name: grafana
-          port: 80
-  tls:
-    secretName: grafana-tls
+        - name: api@internal
+          kind: TraefikService
+    # - match: Host(`grafana.local.ruizops.com`)
+    #   kind: Rule
+    #   services:
+    # - name: grafana
+    #   port: 80
+
+  # tls:
+  #   secretName: grafana-tls
