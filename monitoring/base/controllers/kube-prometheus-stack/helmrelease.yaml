@@ -18,3 +18,14 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
+  values:
+    grafana:
+      enabled: true
+      ingressRoute:
+        enabled: false
+    prometheus:
+      ingress:
+        enabled: false
+    alertmanager:
+      ingress:
+        enabled: false
