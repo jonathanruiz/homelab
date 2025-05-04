@@ -48,3 +48,9 @@ stringData:
   tenantId: "TENANT_ID"
   akvUrl: "https://KEY_VAULT_NAME.vault.azure.net/"
 ```
+
+This needs to be deployed before the Flux bootstrap command is run, otherwise the `external-secrets` controller will not be able to access the Azure Key Vault.
+
+```
+kubectl apply -f azure-secret-creds.yaml
+```
