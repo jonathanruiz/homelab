@@ -43,21 +43,21 @@ spec:
       ingress:
         enabled: false
 
-    kubeApiServer:
-      enabled: true
+    # kubeApiServer:
+    #   enabled: true
 
-    kubelet:
-      enabled: true
-      serviceMonitor:
-        metricRelabelings:
-          - action: replace
-            sourceLabels:
-              - node
-            targetLabel: instance
+    # kubelet:
+    #   enabled: true
+    #   serviceMonitor:
+    #     metricRelabelings:
+    #       - action: replace
+    #         sourceLabels:
+    #           - node
+    #         targetLabel: instance
 
-    persistence:
-      enabled: true
-      type: pvc
-      accessModes:
-        - ReadWriteOnce
-      size: 4Gi
+    # persistence:
+    #   enabled: true
+    #   type: pvc
+    #   accessModes:
+    #     - ReadWriteOnce
+    #   size: 4Gi
