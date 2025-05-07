@@ -19,7 +19,10 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    fullnameOverride: kube-prometheus-stack
+
     grafana:
+      fullnameOverride: grafana
       enabled: true
       admin:
         existingSecret: grafana-admin-credentials
@@ -27,9 +30,34 @@ spec:
         passwordKey: admin-password
       ingressRoute:
         enabled: false
+
     prometheus:
+      fullnameOverride: prometheus
+      enabled: true
       ingress:
         enabled: false
+
     alertmanager:
+      fullnameOverride: alertmanager
+      enabled: true
       ingress:
         enabled: false
+
+    kubeApiServer:
+      enabled: true
+
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+
+    persistence:
+      enabled: true
+      type: pvc
+      accessModes:
+        - ReadWriteOnce
+      size: 4Gi
