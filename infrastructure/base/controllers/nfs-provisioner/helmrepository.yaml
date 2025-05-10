@@ -4,6 +4,6 @@ metadata:
   name: nfs-provisioner
   namespace: nfs-provisioner
 spec:
-  interval: 1h
+  interval: 12h
   url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
   timeout: 1m

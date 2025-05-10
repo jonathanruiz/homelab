@@ -4,7 +4,7 @@ metadata:
   name: nfs-client
   namespace: nfs-provisioner
 spec:
-  interval: 5m
+  interval: 12h
   chart:
     spec:
       chart: nfs-subdir-external-provisioner
