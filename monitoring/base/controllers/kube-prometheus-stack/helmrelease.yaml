@@ -37,6 +37,12 @@ spec:
       ingress:
         enabled: false
 
+      prometheusSpec:
+        # pvc retention policy for prometheus
+        persistentVolumeClaimRetentionPolicy:
+          whenDeleted: Retain
+          whenScaled: Retain
+
     alertmanager:
       fullnameOverride: alertmanager
       enabled: true
@@ -54,10 +60,3 @@ spec:
             sourceLabels:
               - node
             targetLabel: instance
-
-    persistence:
-      enabled: true
-      type: pvc
-      accessModes:
-        - ReadWriteOnce
-      size: 4Gi
