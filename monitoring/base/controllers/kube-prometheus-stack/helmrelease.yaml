@@ -59,6 +59,22 @@ spec:
       enabled: true
       ingress:
         enabled: false
+      alertmanagerSpec:
+        storageSpec:
+          ## Using PersistentVolumeClaim
+          volumeClaimTemplate:
+            spec:
+              storageClassName: nfs-client
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 8Gi
+            selector: {}
+
+        # pvc retention policy for alertmanager
+        persistentVolumeClaimRetentionPolicy:
+          whenDeleted: Retain
+          whenScaled: Retain
 
     kubeApiServer:
       enabled: true
