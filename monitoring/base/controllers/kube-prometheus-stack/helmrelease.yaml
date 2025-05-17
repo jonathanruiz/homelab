@@ -38,6 +38,17 @@ spec:
         enabled: false
 
       prometheusSpec:
+        storageSpec:
+          ## Using PersistentVolumeClaim
+          volumeClaimTemplate:
+            spec:
+              storageClassName: nfs-client
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 8Gi
+            selector: {}
+
         # pvc retention policy for prometheus
         persistentVolumeClaimRetentionPolicy:
           whenDeleted: Retain
