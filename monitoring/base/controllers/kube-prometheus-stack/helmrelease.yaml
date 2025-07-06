@@ -30,6 +30,17 @@ spec:
         passwordKey: admin-password
       ingressRoute:
         enabled: false
+      serviceMonitor:
+        enabled: true
+      persistence:
+        enabled: true
+        type: pvc
+        storageClassName: "nfs-client"
+        accessModes:
+          - ReadWriteOnce
+        size: 20Gi
+        finalizers:
+          - kubernetes.io/pvc-protection
 
     prometheus:
       fullnameOverride: prometheus
