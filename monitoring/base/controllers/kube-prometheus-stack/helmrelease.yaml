@@ -35,15 +35,21 @@ spec:
       persistence:
         enabled: true
         type: pvc
-        storageClassName: "nfs-client"
+        storageClassName: nfs-client
         accessModes:
           - ReadWriteOnce
         size: 20Gi
-        finalizers:
-          - kubernetes.io/pvc-protection
-      # https://github.com/grafana/helm-charts/issues/752#issuecomment-958775016
+      # https://github.com/grafana/helm-charts/issues/752#issuecomment-2996802374
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        fsGroup: 65534
       initChownData:
-        enabled: false
+        enabled: true
+        securityContext:
+          runAsUser: 65534
+          runAsGroup: 65534
 
     prometheus:
       fullnameOverride: prometheus
