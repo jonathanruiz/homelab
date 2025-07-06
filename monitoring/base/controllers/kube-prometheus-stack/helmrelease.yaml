@@ -41,6 +41,9 @@ spec:
         size: 20Gi
         finalizers:
           - kubernetes.io/pvc-protection
+      # https://github.com/grafana/helm-charts/issues/752#issuecomment-958775016
+      initChownData:
+        enabled: false
 
     prometheus:
       fullnameOverride: prometheus
