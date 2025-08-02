@@ -77,7 +77,7 @@ spec:
       create: true
       defaultClass: true
       name: nfs-client
-      reclaimPolicy: Delete
+      reclaimPolicy: Retain
       volumeBindingMode: Immediate
 
     strategyType: Recreate
