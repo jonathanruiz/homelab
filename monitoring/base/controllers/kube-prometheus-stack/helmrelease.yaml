@@ -43,7 +43,7 @@ spec:
           - kubernetes.io/pvc-protection
       # https://github.com/grafana/helm-charts/issues/752#issuecomment-958775016
       initChownData:
-        enabled: false
+        enabled: true
       defaultDashboardsEnabled: true
       forceDeployDashboards: true
       sidecar:
