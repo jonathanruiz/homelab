@@ -45,6 +45,7 @@ spec:
       initChownData:
         enabled: false
       defaultDashboardsEnabled: true
+      forceDeployDashboards: true
       sidecar:
         dashboards:
           enabled: true
