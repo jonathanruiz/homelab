@@ -73,7 +73,7 @@ spec:
       accessModes: ReadWriteOnce
       allowVolumeExpansion: true
       annotations: {}
-      archiveOnDelete: true
+      archiveOnDelete: false
       create: true
       defaultClass: true
       name: nfs-client
