@@ -49,6 +49,7 @@ spec:
       sidecar:
         dashboards:
           enabled: true
+          folder: /var/lib/grafana/dashboards
           label: grafana_dashboard
           labelValue: "1"
           searchNamespace: ALL
