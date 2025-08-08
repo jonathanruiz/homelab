@@ -1,6 +1,0 @@
-# monitoring/base/configs/patch-grafana-dashboards.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  annotations:
-    grafana_folder: "Kubernetes"
