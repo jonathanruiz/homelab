@@ -10,7 +10,7 @@ spec:
     - match: Host(`grafana.local.ruizops.com`)
       kind: Rule
       services:
-        - name: grafana
+        - name: kube-prometheus-stack-grafana # Update this
           port: 80
   tls:
     secretName: grafana-tls
