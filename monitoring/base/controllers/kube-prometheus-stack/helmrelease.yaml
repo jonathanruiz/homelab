@@ -55,8 +55,8 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
       initChownData:
         enabled: false
-      defaultDashboardsEnabled: true
-      forceDeployDashboards: true
+      defaultDashboardsEnabled: false
+      forceDeployDashboards: false
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
