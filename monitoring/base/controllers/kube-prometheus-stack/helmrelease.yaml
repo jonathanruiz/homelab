@@ -35,7 +35,7 @@ spec:
       persistence:
         enabled: true
         type: pvc
-        storageClassName: "nfs-client"
+        storageClassName: ""
         accessModes:
           - ReadWriteOnce
         size: 20Gi
