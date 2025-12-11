@@ -11,6 +11,7 @@ spec:
       kind: Rule
       services:
         - name: grafana
-          port: 3000
+          namespace: monitoring
+          port: 80
   tls:
     secretName: grafana-tls
