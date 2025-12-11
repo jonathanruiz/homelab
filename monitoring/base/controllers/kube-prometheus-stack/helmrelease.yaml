@@ -73,11 +73,8 @@ spec:
           labelValue: "1"
           searchNamespace: ALL
           folder: /tmp/dashboards
-          # Add this line to disable auto-provider creation:
-          provider:
-            disableDelete: false
-            allowUiUpdates: true
-            folder: Kubernetes
+          # Tell the sidecar NOT to create its own provider file
+          SCProvider: false
 
     prometheus:
       fullnameOverride: prometheus
