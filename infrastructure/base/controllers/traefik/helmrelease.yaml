@@ -22,6 +22,7 @@ spec:
 
     additionalArguments:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
+      - "--providers.kubernetescrd.allowCrossNamespace=true"
       - "--log.level=INFO" # Set log level to INFO
 
     ports:
