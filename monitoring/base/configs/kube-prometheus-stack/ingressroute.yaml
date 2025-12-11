@@ -9,6 +9,8 @@ spec:
   routes:
     - match: Host(`grafana.local.ruizops.com`)
       kind: Rule
+      middlewares:
+        - name: grafana-headers
       services:
         - name: grafana
           namespace: monitoring
