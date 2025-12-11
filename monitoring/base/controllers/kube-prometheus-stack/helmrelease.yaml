@@ -73,8 +73,11 @@ spec:
           labelValue: "1"
           searchNamespace: ALL
           folder: /tmp/dashboards
-          annotations:
-            grafana_folder: "Kubernetes"
+          # Add this line to disable auto-provider creation:
+          provider:
+            disableDelete: false
+            allowUiUpdates: true
+            folder: Kubernetes
 
     prometheus:
       fullnameOverride: prometheus
