@@ -35,15 +35,21 @@ spec:
       persistence:
         enabled: true
         type: pvc
-        storageClassName: ""
+        storageClassName: "nfs-client" # Explicitly set to nfs-client
         accessModes:
-          - ReadWriteOnce
+          - ReadWriteMany # Changed to ReadWriteMany for NFS
         size: 20Gi
         finalizers:
           - kubernetes.io/pvc-protection
-      # https://github.com/grafana/helm-charts/issues/752#issuecomment-958775016
+      # Security context to work with NFS
+      securityContext:
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        fsGroupChangePolicy: "OnRootMismatch"
+      # Disable initChownData since we're setting fsGroup
       initChownData:
-        enabled: true
+        enabled: false
       defaultDashboardsEnabled: true
       forceDeployDashboards: true
       sidecar:
