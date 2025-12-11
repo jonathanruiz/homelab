@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./monitoring/base/configs/kube-prometheus-stack/kustomization.yaml
+  path: ./monitoring/base/configs/kube-prometheus-stack
   prune: true
   sourceRef:
     kind: GitRepository
