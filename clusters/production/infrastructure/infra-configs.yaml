@@ -4,7 +4,7 @@ metadata:
   name: infrastructure-config
   namespace: flux-system
 spec:
-  path: ./infrastructure/base/configs
+  path: ./infrastructure/configs
   prune: true
   interval: 10m
   wait: true
