@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tailscale-operator
+  namespace: tailscale
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: tailscale-operator
+      version: ">=1.60.0"
+      sourceRef:
+        kind: HelmRepository
+        name: tailscale
+        namespace: tailscale
+  values:
+    operatorConfig:
+      hostname: homelab-operator
+      # OAuth credentials are read from the operator-oauth secret
+      # created by the ExternalSecret in infrastructure/configs/tailscale
