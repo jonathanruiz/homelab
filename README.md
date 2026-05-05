@@ -26,8 +26,7 @@ talosctl apply-config --insecure -n <worker-ip> --file worker.yaml
 
 ```bash
 export GITHUB_TOKEN=<GITHUB_TOKEN>
-
-flux bootstrap github --token-auth --owner=jonathanruiz --repository=homelab --branch=main --path=./clusters/staging --personal
+flux bootstrap github --token-auth --owner=jonathanruiz --repository=homelab --branch=main --path=./clusters/production --personal
 
 ```
 
