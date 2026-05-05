@@ -3,4 +3,3 @@ resources:
   - external-secrets
   - cert-manager
   - nfs-provisioner
-  - tailscale
