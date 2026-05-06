@@ -84,7 +84,6 @@ spec:
               resources:
                 requests:
                   storage: 8Gi
-            selector: {}
 
         persistentVolumeClaimRetentionPolicy:
           whenDeleted: Retain
