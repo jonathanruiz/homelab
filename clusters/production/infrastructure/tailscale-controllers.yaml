@@ -7,7 +7,6 @@ spec:
   interval: 10m
   path: ./infrastructure/controllers/tailscale
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
