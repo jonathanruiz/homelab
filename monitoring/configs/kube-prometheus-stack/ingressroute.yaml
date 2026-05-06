@@ -9,6 +9,7 @@ spec:
   routes:
     - match: Host(`grafana.local.ruizops.com`)
       kind: Rule
+      priority: 100
       middlewares:
         - name: grafana-headers
           namespace: monitoring
