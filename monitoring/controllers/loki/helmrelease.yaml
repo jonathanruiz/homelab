@@ -35,9 +35,14 @@ spec:
       limits_config:
         retention_period: 30d
         volume_enabled: true
+      storage_config:
+        tsdb_shipper:
+          active_index_directory: /tmp/loki/tsdb-active
+          cache_location: /tmp/loki/tsdb-cache
       compactor:
         retention_enabled: true
         delete_request_store: filesystem
+        working_directory: /tmp/loki/compactor
       ingester:
         wal:
           enabled: false
