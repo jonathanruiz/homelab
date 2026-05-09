@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: promtail-controller
+  name: alloy-controller
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./monitoring/controllers/promtail
+  path: ./monitoring/controllers/alloy
   prune: true
   sourceRef:
     kind: GitRepository
