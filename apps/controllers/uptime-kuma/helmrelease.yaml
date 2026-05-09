@@ -15,6 +15,9 @@ spec:
         namespace: uptime-kuma
       interval: 12h
   values:
+    database:
+      type: sqlite
+
     persistence:
       enabled: true
       storageClassName: nfs-client
