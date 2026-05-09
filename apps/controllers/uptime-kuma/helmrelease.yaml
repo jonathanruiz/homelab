@@ -20,8 +20,5 @@ spec:
       storageClassName: nfs-client
       accessMode: ReadWriteOnce
 
-    externalDatabase:
-      enabled: false
-
     ingress:
       enabled: false
