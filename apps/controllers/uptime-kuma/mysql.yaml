@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: bitnami
-        namespace: flux-system
+        namespace: bitnami
       interval: 12h
   values:
     fullnameOverride: uptime-kuma-db
@@ -21,9 +21,6 @@ spec:
       database: uptime_kuma
       username: uptime_kuma
       existingSecret: uptime-kuma-db-credentials
-      secretKeys:
-        adminPasswordKey: db-root-password
-        userPasswordKey: db-password
 
     primary:
       persistence:

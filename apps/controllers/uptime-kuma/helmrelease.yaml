@@ -28,7 +28,7 @@ spec:
       database: uptime_kuma
       existingSecret: uptime-kuma-db-credentials
       existingSecretUsernameKey: db-username
-      existingSecretPasswordKey: db-password
+      existingSecretPasswordKey: mysql-password
 
     ingress:
       enabled: false
