@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: netbox
+  namespace: netbox
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: netbox
+      version: "8.2.9"
+      sourceRef:
+        kind: HelmRepository
+        name: netbox
+        namespace: netbox
+      interval: 12h
+  values:
+    superuser:
+      name: admin
+      email: admin@ruizops.com
+      existingSecret: netbox-secrets
+
+    existingSecret: netbox-secrets
+
+    allowedHosts:
+      - netbox.local.ruizops.com
+
+    persistence:
+      enabled: true
+      storageClass: nfs-client
+      accessMode: ReadWriteOnce
+
+    postgresql:
+      enabled: true
+      auth:
+        username: netbox
+        database: netbox
+        existingSecret: netbox-secrets
+        secretKeys:
+          userPasswordKey: db_password
+
+    # valkey:
+    #   enabled: true
+
+    ingress:
+      enabled: false
