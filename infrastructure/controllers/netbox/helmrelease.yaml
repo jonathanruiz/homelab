@@ -31,16 +31,18 @@ spec:
       accessMode: ReadWriteOnce
 
     postgresql:
-      enabled: true
-      auth:
-        username: netbox
-        database: netbox
-        existingSecret: netbox-secrets
-        secretKeys:
-          userPasswordKey: db_password
+      enabled: false
 
-    # valkey:
-    #   enabled: true
+    externalDatabase:
+      host: netbox-postgresql
+      port: 5432
+      database: netbox
+      username: netbox
+      existingSecretName: netbox-secrets
+      existingSecretKey: db_password
+
+    valkey:
+      enabled: true
 
     ingress:
       enabled: false
