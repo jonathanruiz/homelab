@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: checkmate
+  namespace: checkmate
+spec:
+  interval: 24h
+  url: https://github.com/bluewave-labs/Checkmate
+  ref:
+    tag: v3.2.0
