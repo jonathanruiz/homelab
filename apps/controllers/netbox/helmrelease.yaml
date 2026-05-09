@@ -42,6 +42,7 @@ spec:
         database: netbox
         existingSecret: netbox-secrets
         secretKeys:
+          adminPasswordKey: postgres-password
           userPasswordKey: db_password
 
     valkey:
