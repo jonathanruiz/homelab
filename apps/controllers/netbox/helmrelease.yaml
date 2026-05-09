@@ -30,16 +30,19 @@ spec:
       storageClass: nfs-client
       accessMode: ReadWriteOnce
 
-    postgresql:
-      enabled: false
+    # global:
+    #   imageRegistry: registry.bitnami.com
+    #   security:
+    #     allowInsecureImages: true
 
-    externalDatabase:
-      host: netbox-postgresql
-      port: 5432
-      database: netbox
-      username: netbox
-      existingSecretName: netbox-secrets
-      existingSecretKey: db_password
+    postgresql:
+      enabled: true
+      auth:
+        username: netbox
+        database: netbox
+        existingSecret: netbox-secrets
+        secretKeys:
+          userPasswordKey: db_password
 
     valkey:
       enabled: true
