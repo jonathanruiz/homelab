@@ -20,5 +20,15 @@ spec:
       storageClassName: nfs-client
       accessMode: ReadWriteOnce
 
+    externalDatabase:
+      enabled: true
+      type: postgres
+      hostname: uptime-kuma-db
+      port: 5432
+      database: uptime_kuma
+      existingSecret: uptime-kuma-db-credentials
+      existingSecretUsernameKey: db-username
+      existingSecretPasswordKey: db-password
+
     ingress:
       enabled: false
