@@ -29,7 +29,7 @@ spec:
             rule {
               source_labels = ["__meta_kubernetes_pod_node_name"]
               action        = "keep"
-              regex         = env("NODE_NAME")
+              regex         = sys.env("K8S_NODE_NAME")
             }
 
             rule {
@@ -61,11 +61,6 @@ spec:
 
     controller:
       type: daemonset
-      extraEnv:
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
