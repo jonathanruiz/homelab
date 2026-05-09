@@ -15,14 +15,13 @@ spec:
         namespace: uptime-kuma
       interval: 12h
   values:
-    database:
-      type: sqlite
-
-    persistence:
+    volume:
       enabled: true
       storageClassName: nfs-client
-      accessModes:
-        - ReadWriteOnce
+      accessMode: ReadWriteOnce
+
+    externalDatabase:
+      enabled: false
 
     ingress:
       enabled: false
