@@ -38,6 +38,9 @@ spec:
       compactor:
         retention_enabled: true
         delete_request_store: filesystem
+      ingester:
+        wal:
+          enabled: false
 
     singleBinary:
       replicas: 1
