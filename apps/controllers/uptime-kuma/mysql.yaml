@@ -15,6 +15,9 @@ spec:
         namespace: bitnami
       interval: 12h
   values:
+    global:
+      imageRegistry: registry.bitnami.com
+
     fullnameOverride: uptime-kuma-db
 
     auth:
