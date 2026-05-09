@@ -55,6 +55,13 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
       initChownData:
         enabled: false
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          url: http://loki.monitoring.svc.cluster.local:3100
+          access: proxy
+          isDefault: false
+
       defaultDashboardsEnabled: true
       forceDeployDashboards: false
       sidecar:
