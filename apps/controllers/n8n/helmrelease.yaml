@@ -8,27 +8,38 @@ spec:
   chart:
     spec:
       chart: n8n
-      version: "2.0.1"
+      version: "1.16.39"
       sourceRef:
         kind: HelmRepository
         name: n8n
         namespace: n8n
       interval: 12h
   values:
-    config:
-      generic:
-        timezone: "America/Denver"
-      webhook:
-        url: "https://n8n.local.ruizops.com"
+    timezone: "America/Denver"
 
-    secret:
-      existingSecret: n8n-secrets
+    existingEncryptionKeySecret: "n8n-secrets"
 
-    persistence:
-      enabled: true
-      storageClass: nfs-client
-      accessModes:
-        - ReadWriteOnce
+    webhook:
+      mode: regular
+      url: "https://n8n.local.ruizops.com"
+
+    worker:
+      mode: regular
+
+    main:
+      persistence:
+        enabled: true
+        storageClass: nfs-client
+        accessMode: ReadWriteOnce
+
+    db:
+      type: sqlite
 
     ingress:
+      enabled: false
+
+    diagnostics:
+      enabled: false
+
+    versionNotifications:
       enabled: false
