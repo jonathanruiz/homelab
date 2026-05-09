@@ -22,9 +22,9 @@ spec:
 
     externalDatabase:
       enabled: true
-      type: postgres
+      type: mariadb
       hostname: uptime-kuma-db
-      port: 5432
+      port: 3306
       database: uptime_kuma
       existingSecret: uptime-kuma-db-credentials
       existingSecretUsernameKey: db-username
