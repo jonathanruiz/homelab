@@ -17,6 +17,8 @@ spec:
   values:
     global:
       imageRegistry: registry.bitnami.com
+      security:
+        allowInsecureImages: true
 
     fullnameOverride: uptime-kuma-db
 
