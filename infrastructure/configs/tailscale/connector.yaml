@@ -4,6 +4,7 @@ metadata:
   name: homelab-subnet-router
 spec:
   hostname: homelab-subnet-router
+  exitNode: true
   subnetRouter:
     advertiseRoutes:
       - "10.0.10.0/24"   # node network
