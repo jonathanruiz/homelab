@@ -27,7 +27,7 @@ spec:
 
     persistence:
       enabled: true
-      storageClass: nfs-client
+      storageClass: nfs-database
       accessMode: ReadWriteOnce
 
     # global:
@@ -44,6 +44,9 @@ spec:
         secretKeys:
           adminPasswordKey: postgres-password
           userPasswordKey: db_password
+      primary:
+        persistence:
+          storageClass: nfs-database
 
     valkey:
       enabled: true

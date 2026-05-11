@@ -58,6 +58,6 @@ spec:
           - patch: |
               - op: add
                 path: /spec/storageClassName
-                value: nfs-client
+                value: nfs-database
             target:
               kind: PersistentVolumeClaim

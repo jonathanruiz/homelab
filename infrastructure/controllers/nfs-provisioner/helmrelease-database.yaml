@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfs-database
+  namespace: nfs-provisioner
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: nfs-subdir-external-provisioner
+      version: 4.0.18
+      sourceRef:
+        kind: HelmRepository
+        name: nfs-provisioner
+        namespace: nfs-provisioner
+
+  values:
+    affinity: {}
+
+    image:
+      pullPolicy: IfNotPresent
+      repository: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner
+      tag: v4.0.2
+
+    leaderElection:
+      enabled: true
+
+    nfs:
+      path: /volume1/k8s-databases
+      reclaimPolicy: Retain
+      server: 10.0.10.30
+      volumeName: nfs-database-provisioner-root
+
+    nodeSelector:
+      kubernetes.io/os: linux
+
+    podDisruptionBudget:
+      enabled: false
+      maxUnavailable: 1
+
+    podSecurityContext:
+      seccompProfile:
+        type: RuntimeDefault
+
+    podSecurityPolicy:
+      enabled: false
+
+    rbac:
+      create: true
+
+    replicaCount: 3
+
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: false
+
+    serviceAccount:
+      annotations: {}
+      create: true
+
+    storageClass:
+      accessModes: ReadWriteOnce
+      allowVolumeExpansion: true
+      archiveOnDelete: false
+      create: true
+      defaultClass: false
+      name: nfs-database
+      reclaimPolicy: Retain
+      volumeBindingMode: Immediate
+
+    strategyType: Recreate
