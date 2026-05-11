@@ -88,6 +88,9 @@ spec:
             spec:
               storageClassName: nfs-client
               accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 50Gi
 
         persistentVolumeClaimRetentionPolicy:
           whenDeleted: Retain
