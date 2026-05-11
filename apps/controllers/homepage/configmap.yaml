@@ -34,6 +34,9 @@ data:
         - Netbox:
             - abbr: NB
               href: https://netbox.local.ruizops.com
+        - IT Tools:
+            - abbr: IT
+              href: https://it-tools.local.ruizops.com
   services.yaml: ""
   widgets.yaml: |
     - search:
