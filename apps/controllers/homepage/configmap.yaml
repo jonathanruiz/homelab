@@ -17,6 +17,9 @@ data:
         - Grafana:
             - abbr: GF
               href: https://grafana.local.ruizops.com
+        - Checkmate:
+            - abbr: CM
+              href: https://checkmate.local.ruizops.com
     - Automation:
         - n8n:
             - abbr: N8
@@ -24,10 +27,13 @@ data:
     - Infrastructure:
         - Traefik:
             - abbr: TR
-              href: https://traefik.local.ruizops.com
+              href: https://traefik.local.ruizops.com/dashboard/
         - Gitea:
             - abbr: GT
               href: https://gitea.local.ruizops.com
+        - Netbox:
+            - abbr: NB
+              href: https://netbox.local.ruizops.com
   services.yaml: ""
   widgets.yaml: |
     - search:
