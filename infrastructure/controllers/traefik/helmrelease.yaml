@@ -16,6 +16,27 @@ spec:
         name: traefik
         namespace: traefik
   values:
+    experimental:
+      plugins:
+        crowdsec-bouncer-traefik-plugin:
+          moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+          version: "v1.4.5"
+
+    deployment:
+      additionalVolumes:
+        - name: crowdsec-bouncer-key
+          secret:
+            secretName: crowdsec-bouncer-key
+            items:
+              - key: api-key
+                path: api-key
+      additionalContainers: []
+
+    additionalVolumeMounts:
+      - name: crowdsec-bouncer-key
+        mountPath: /etc/crowdsec
+        readOnly: true
+
     globalArguments:
       - "--global.checknewversion=false" # Disable version check
       - "--global.sendanonymoususage=false" # Disable anonymous usage statistics
