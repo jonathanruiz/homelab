@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: crowdsec-lapi
   namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
 spec:
   namespaceSelector:
     matchNames:
@@ -20,6 +22,8 @@ kind: ServiceMonitor
 metadata:
   name: crowdsec-agent
   namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
 spec:
   namespaceSelector:
     matchNames:
