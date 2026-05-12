@@ -1,0 +1,78 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: crowdsec
+  namespace: crowdsec
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: crowdsec
+      version: "0.23.0"
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: crowdsec
+      interval: 12h
+  values:
+    # Talos Linux uses containerd, not docker
+    container_runtime: containerd
+
+    lapi:
+      replicas: 1
+      # Load bouncer API key from secret so it is pre-registered on startup.
+      # Secret is provisioned by infrastructure/configs/crowdsec/externalsecret.yaml.
+      # On first deploy the secret may not exist yet — Flux will retry once it does.
+      envFrom:
+        - secretRef:
+            name: crowdsec-secrets
+
+      persistentVolume:
+        data:
+          enabled: true
+          storageClassName: nfs-database   # no_root_squash required — crowdsec runs as root
+          accessModes:
+            - ReadWriteOnce
+          size: 1Gi
+        config:
+          enabled: true
+          storageClassName: nfs-database
+          accessModes:
+            - ReadWriteOnce
+          size: 100Mi
+
+    agent:
+      # DaemonSet — one agent per node
+      isDeployment: false
+
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+
+      # Mount /var/log from the host — pod logs are at /var/log/pods/ on Talos
+      hostVarLog: true
+
+      # Install collections for Traefik log parsing and base HTTP attack detection
+      env:
+        - name: COLLECTIONS
+          value: "crowdsecurity/traefik crowdsecurity/base-http-scenarios"
+
+      # Read Traefik pod logs from the host filesystem
+      acquisitions:
+        - filenames:
+            - /var/log/pods/traefik_*/**/*.log
+          labels:
+            type: traefik
+
+  # Add helm.sh/resource-policy: keep to LAPI PVCs — chart does not expose annotation config
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |
+              - op: add
+                path: /metadata/annotations/helm.sh~1resource-policy
+                value: keep
+            target:
+              kind: PersistentVolumeClaim
+              namespace: crowdsec

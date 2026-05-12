@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: crowdsec-traefik-bouncer
+  namespace: crowdsec
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: crowdsec-traefik-bouncer
+      version: "0.1.4"
+      sourceRef:
+        kind: HelmRepository
+        name: crowdsec
+        namespace: crowdsec
+      interval: 12h
+  # Bouncer API key injected from secret provisioned by infrastructure/configs/crowdsec/externalsecret.yaml.
+  # Generate the key first: kubectl exec -n crowdsec <lapi-pod> -- cscli bouncers add traefik-bouncer
+  # Then store it in Azure Key Vault under key: crowdsec-bouncer-api-key
+  valuesFrom:
+    - kind: Secret
+      name: crowdsec-secrets
+      valuesKey: bouncer-api-key
+      targetPath: bouncer.crowdsec_bouncer_api_key
+  values:
+    bouncer:
+      crowdsec_agent_host: "crowdsec-service.crowdsec.svc.cluster.local:8080"
+      crowdsec_bouncer_gin_mode: "release"

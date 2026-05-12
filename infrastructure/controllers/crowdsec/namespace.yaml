@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: crowdsec
+  labels:
+    app.kubernetes.io/name: crowdsec
+    app.kubernetes.io/part-of: crowdsec
+    app.kubernetes.io/managed-by: flux-system
+    app.kubernetes.io/instance: crowdsec
