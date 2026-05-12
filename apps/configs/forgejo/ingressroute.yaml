@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`forgejo.local.ruizops.com`)
+    - match: Host(`forgejo.local.ruizops.com`) || Host(`forgejo.ruizops.com`)
       kind: Rule
       priority: 100
       services:
