@@ -12,7 +12,6 @@ spec:
       priority: 100
       middlewares:
         - name: crowdsec-bouncer
-          namespace: crowdsec
       services:
         - name: forgejo-http
           namespace: forgejo
