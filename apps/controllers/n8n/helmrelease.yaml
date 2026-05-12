@@ -33,7 +33,7 @@ spec:
         fsGroup: 1000
       persistence:
         enabled: true
-        storageClass: nfs-client
+        storageClass: nfs-database
         accessMode: ReadWriteOnce
 
     db:
