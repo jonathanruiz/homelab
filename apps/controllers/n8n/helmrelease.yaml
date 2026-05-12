@@ -26,15 +26,20 @@ spec:
     worker:
       mode: regular
 
+    podSecurityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
     main:
-      podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       persistence:
         enabled: true
         storageClass: nfs-database
         accessMode: ReadWriteOnce
+      extraEnvVars:
+        N8N_PROXY_HOPS: "1"
+        N8N_RUNNERS_ENABLED: ""
+      extraSecretNamesForEnvFrom:
+        - n8n-secrets
 
     db:
       type: postgresdb
@@ -52,17 +57,6 @@ spec:
         persistence:
           enabled: true
           storageClass: nfs-database
-
-    extraEnv:
-      - name: DB_POSTGRESDB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: n8n-secrets
-            key: POSTGRES_PASSWORD
-      - name: N8N_PROXY_HOPS
-        value: "1"
-      - name: N8N_RUNNERS_ENABLED
-        value: ""
 
     ingress:
       enabled: false
