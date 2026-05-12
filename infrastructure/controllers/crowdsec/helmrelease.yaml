@@ -58,12 +58,11 @@ spec:
         - name: COLLECTIONS
           value: "crowdsecurity/traefik crowdsecurity/base-http-scenarios"
 
-      # Read Traefik pod logs from the host filesystem
-      acquisitions:
-        - filenames:
-            - /var/log/pods/traefik_*/**/*.log
-          labels:
-            type: traefik
+      # Read logs from Traefik pods via the Kubernetes pod log source
+      acquisition:
+        - namespace: traefik
+          podName: traefik-*
+          program: traefik
 
   # Add helm.sh/resource-policy: keep to LAPI PVCs — chart does not expose annotation config
   postRenderers:
