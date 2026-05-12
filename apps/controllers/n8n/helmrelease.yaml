@@ -33,7 +33,32 @@ spec:
         accessMode: ReadWriteOnce
 
     db:
-      type: sqlite
+      type: postgresdb
+
+    postgresql:
+      enabled: true
+      auth:
+        username: n8n
+        database: n8n
+        existingSecret: n8n-secrets
+        secretKeys:
+          adminPasswordKey: POSTGRES_PASSWORD
+          userPasswordKey: POSTGRES_PASSWORD
+      primary:
+        persistence:
+          enabled: true
+          storageClass: nfs-database
+
+    extraEnv:
+      - name: DB_POSTGRESDB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: n8n-secrets
+            key: POSTGRES_PASSWORD
+      - name: N8N_PROXY_HOPS
+        value: "1"
+      - name: N8N_RUNNERS_ENABLED
+        value: ""
 
     ingress:
       enabled: false
