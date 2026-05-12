@@ -1,0 +1,60 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: cilium
+      version: "1.19.3"
+      sourceRef:
+        kind: HelmRepository
+        name: cilium
+        namespace: kube-system
+      interval: 12h
+  values:
+    # Talos-specific: use local API server proxy instead of kube-proxy
+    kubeProxyReplacement: true
+    k8sServiceHost: localhost
+    k8sServicePort: 7445
+
+    # Talos manages cgroup mounts itself
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+
+    ipam:
+      mode: kubernetes
+
+    # Single control plane node
+    operator:
+      replicas: 1
+
+    # Required capabilities for Talos
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+
+    # Enable L2 announcements
+    l2announcements:
+      enabled: true
+    externalIPs:
+      enabled: true
