@@ -10,6 +10,9 @@ spec:
     - match: Host(`it-tools.local.ruizops.com`) || Host(`it-tools.ruizops.com`)
       kind: Rule
       priority: 100
+      middlewares:
+        - name: crowdsec-bouncer
+          namespace: crowdsec
       services:
         - name: it-tools
           namespace: it-tools

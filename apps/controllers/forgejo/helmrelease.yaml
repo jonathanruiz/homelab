@@ -20,8 +20,8 @@ spec:
         existingSecret: forgejo-admin-credentials
       config:
         server:
-          DOMAIN: forgejo.local.ruizops.com
-          ROOT_URL: https://forgejo.local.ruizops.com
+          DOMAIN: forgejo.ruizops.com
+          ROOT_URL: https://forgejo.ruizops.com
           HTTP_PORT: 3000
         actions:
           ENABLED: "false"

@@ -10,6 +10,9 @@ spec:
     - match: Host(`forgejo.local.ruizops.com`) || Host(`forgejo.ruizops.com`)
       kind: Rule
       priority: 100
+      middlewares:
+        - name: crowdsec-bouncer
+          namespace: crowdsec
       services:
         - name: forgejo-http
           namespace: forgejo
