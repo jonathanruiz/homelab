@@ -13,3 +13,4 @@ spec:
   targetNamespace: monitoring
   dependsOn:
     - name: infrastructure-controllers
+    - name: node-exporter-controller
