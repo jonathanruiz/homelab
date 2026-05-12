@@ -27,6 +27,10 @@ spec:
       mode: regular
 
     main:
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       persistence:
         enabled: true
         storageClass: nfs-client
