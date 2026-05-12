@@ -73,10 +73,12 @@ spec:
           labelValue: "1"
           searchNamespace: ALL
           folder: /tmp/dashboards
+          folderAnnotation: grafana_folder
           provider:
             disableDelete: false
             allowUiUpdates: true
             folder: Kubernetes
+            foldersFromFilesStructure: false
 
     prometheus:
       fullnameOverride: prometheus
