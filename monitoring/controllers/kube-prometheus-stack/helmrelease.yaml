@@ -48,6 +48,8 @@ spec:
         size: 20Gi
         finalizers:
           - kubernetes.io/pvc-protection
+        annotations:
+          helm.sh/resource-policy: keep
       securityContext:
         runAsUser: 472
         runAsGroup: 472

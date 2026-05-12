@@ -59,5 +59,8 @@ spec:
               - op: add
                 path: /spec/storageClassName
                 value: nfs-database
+              - op: add
+                path: /metadata/annotations/helm.sh~1resource-policy
+                value: keep
             target:
               kind: PersistentVolumeClaim

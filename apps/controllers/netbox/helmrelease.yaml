@@ -29,6 +29,8 @@ spec:
       enabled: true
       storageClass: nfs-database
       accessMode: ReadWriteOnce
+      annotations:
+        helm.sh/resource-policy: keep
 
     # global:
     #   imageRegistry: registry.bitnami.com
