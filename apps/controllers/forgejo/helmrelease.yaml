@@ -25,6 +25,8 @@ spec:
           HTTP_PORT: 3000
         actions:
           ENABLED: "false"
+        service:
+          DISABLE_REGISTRATION: "true"
 
     persistence:
       enabled: true
