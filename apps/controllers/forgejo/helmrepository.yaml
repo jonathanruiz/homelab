@@ -1,8 +1,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: gitea
-  namespace: gitea
+  name: forgejo
+  namespace: forgejo
 spec:
   interval: 24h
-  url: https://dl.gitea.com/charts/
+  type: oci
+  url: oci://code.forgejo.org/forgejo-helm

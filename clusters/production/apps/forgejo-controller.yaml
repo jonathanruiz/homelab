@@ -1,15 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: gitea-config
+  name: forgejo-controller
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./apps/configs/gitea
+  path: ./apps/controllers/forgejo
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: gitea
   dependsOn:
-    - name: gitea-controller
+    - name: infrastructure-config

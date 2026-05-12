@@ -28,9 +28,9 @@ data:
         - Traefik:
             - abbr: TR
               href: https://traefik.local.ruizops.com/dashboard/
-        - Gitea:
-            - abbr: GT
-              href: https://gitea.local.ruizops.com
+        - Forgejo:
+            - abbr: FJ
+              href: https://forgejo.local.ruizops.com
         - Netbox:
             - abbr: NB
               href: https://netbox.local.ruizops.com
