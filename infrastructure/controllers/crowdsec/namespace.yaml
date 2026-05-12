@@ -7,3 +7,4 @@ metadata:
     app.kubernetes.io/part-of: crowdsec
     app.kubernetes.io/managed-by: flux-system
     app.kubernetes.io/instance: crowdsec
+    pod-security.kubernetes.io/enforce: privileged
