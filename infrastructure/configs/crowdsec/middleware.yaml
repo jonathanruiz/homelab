@@ -7,7 +7,6 @@ spec:
   plugin:
     crowdsec-bouncer-traefik-plugin:
       enabled: true
-      logLevel: DEBUG
       crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiKeyFile: /etc/crowdsec/api-key

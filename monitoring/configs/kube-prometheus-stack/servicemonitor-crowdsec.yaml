@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: crowdsec-lapi
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - crowdsec
+  selector:
+    matchLabels:
+      app: crowdsec-service
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: crowdsec-agent
+  namespace: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - crowdsec
+  selector:
+    matchLabels:
+      app: crowdsec-agent-service
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
