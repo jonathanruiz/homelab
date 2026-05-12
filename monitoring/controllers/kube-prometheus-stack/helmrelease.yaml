@@ -108,6 +108,9 @@ spec:
           whenDeleted: Retain
           whenScaled: Retain
 
+    prometheus-node-exporter:
+      namespaceOverride: node-exporter
+
     kubeApiServer:
       enabled: true
 

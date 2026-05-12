@@ -1,4 +1,5 @@
 resources:
   - namespace.yaml
+  - namespace-node-exporter.yaml
   - helmrepository.yaml
   - helmrelease.yaml
