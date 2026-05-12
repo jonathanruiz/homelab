@@ -1,5 +1,6 @@
 resources:
   - namespace.yaml
   - helmrepository.yaml
+  - externalsecret.yaml
   - helmrelease.yaml
   - helmrelease-bouncer.yaml
