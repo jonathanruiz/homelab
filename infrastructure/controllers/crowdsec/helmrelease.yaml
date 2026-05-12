@@ -27,19 +27,14 @@ spec:
         - secretRef:
             name: crowdsec-secrets
 
+      # Use emptyDir — SQLite on NFS causes lock contention under concurrent requests.
+      # Decisions are ephemeral (re-synced from agents/hub on restart); bouncer key is
+      # re-registered via BOUNCER_KEY_traefik_bouncer env var from crowdsec-secrets.
       persistentVolume:
         data:
-          enabled: true
-          storageClassName: nfs-database   # no_root_squash required — crowdsec runs as root
-          accessModes:
-            - ReadWriteOnce
-          size: 1Gi
+          enabled: false
         config:
-          enabled: true
-          storageClassName: nfs-database
-          accessModes:
-            - ReadWriteOnce
-          size: 100Mi
+          enabled: false
 
     agent:
       # DaemonSet — one agent per node
@@ -64,14 +59,3 @@ spec:
           podName: traefik-*
           program: traefik
 
-  # Add helm.sh/resource-policy: keep to LAPI PVCs — chart does not expose annotation config
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |
-              - op: add
-                path: /metadata/annotations/helm.sh~1resource-policy
-                value: keep
-            target:
-              kind: PersistentVolumeClaim
-              namespace: crowdsec
