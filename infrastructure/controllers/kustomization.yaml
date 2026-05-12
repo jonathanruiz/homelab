@@ -4,3 +4,4 @@ resources:
   - cert-manager
   - nfs-provisioner
   - crowdsec
+  - cloudflare-tunnel

@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`n8n.local.ruizops.com`)
+    - match: Host(`n8n.local.ruizops.com`) || Host(`n8n.ruizops.com`)
       kind: Rule
       priority: 100
       middlewares:
