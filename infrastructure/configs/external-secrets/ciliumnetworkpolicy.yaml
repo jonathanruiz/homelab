@@ -1,0 +1,24 @@
+---
+# Standard NetworkPolicy ipBlock rules don't match kube-apiserver (hostNetwork) traffic in Cilium.
+# Use CiliumNetworkPolicy entity-based rules instead.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kube-apiserver-egress
+  namespace: external-secrets
+spec:
+  endpointSelector: {}
+  egress:
+    - toEntities:
+        - kube-apiserver
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kube-apiserver-ingress
+  namespace: external-secrets
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEntities:
+        - kube-apiserver
