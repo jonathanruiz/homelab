@@ -2,3 +2,5 @@ resources:
   - cert-manager
   - traefik
   - external-secrets
+  - crowdsec
+  - cloudflare-tunnel
