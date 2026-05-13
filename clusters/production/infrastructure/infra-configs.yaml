@@ -14,7 +14,3 @@ spec:
     name: flux-system
   dependsOn:
     - name: infrastructure-controllers
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: azure-secret-creds
