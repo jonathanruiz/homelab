@@ -2,3 +2,4 @@ resources:
   - certificate.yaml
   - externalsecret.yaml
   - networkpolicy.yaml
+  - ciliumnetworkpolicy.yaml
