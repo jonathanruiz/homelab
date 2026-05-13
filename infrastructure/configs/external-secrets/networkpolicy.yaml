@@ -64,6 +64,7 @@ spec:
           protocol: TCP
 ---
 # Kubernetes API server calls the webhook to validate ExternalSecret resources
+# kube-apiserver runs as a hostNetwork static pod so traffic arrives from the node IP, not kube-system pod network
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -75,12 +76,8 @@ spec:
     - Ingress
   ingress:
     - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: kube-system
-      ports:
-        - port: 10250
-        - port: 8443
+        - ipBlock:
+            cidr: 10.0.10.0/24
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
