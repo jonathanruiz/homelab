@@ -27,6 +27,7 @@ spec:
         - name: crowdsec-bouncer-key
           secret:
             secretName: crowdsec-bouncer-key
+            optional: true
             items:
               - key: api-key
                 path: api-key
