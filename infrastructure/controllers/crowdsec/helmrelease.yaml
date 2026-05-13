@@ -26,6 +26,7 @@ spec:
       envFrom:
         - secretRef:
             name: crowdsec-secrets
+            optional: true
 
       # Use emptyDir — SQLite on NFS causes lock contention under concurrent requests.
       # Decisions are ephemeral (re-synced from agents/hub on restart); bouncer key is
