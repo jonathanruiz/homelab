@@ -84,4 +84,4 @@ spec:
       loadBalancerIP: "10.0.10.200"
       externalIPs: []
       spec:
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
