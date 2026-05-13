@@ -65,6 +65,27 @@ spec:
     - to:
         - podSelector: {}
 ---
+---
+# Cilium socket-level DNAT (bpf_connect4) rewrites service IPs to pod IPs before TC egress
+# NetworkPolicy evaluation, so Checkmate sees traefik pod ports (8000/8443) not service ports.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-traefik-egress
+  namespace: checkmate
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: traefik
+      ports:
+        - port: 8000
+        - port: 8443
+---
 # Checkmate monitors external endpoints for uptime
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
