@@ -1,0 +1,8 @@
+resources:
+  - certificate.yaml
+  - externalsecret.yaml
+  - ingressroute.yaml
+  - middleware.yaml
+  - servicemonitor-crowdsec.yaml
+  - networkpolicy.yaml
+  - ciliumnetworkpolicy.yaml

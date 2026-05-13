@@ -1,0 +1,27 @@
+---
+# Standard NetworkPolicy ipBlock rules don't match kube-apiserver (hostNetwork) traffic in Cilium.
+# Use CiliumNetworkPolicy entity-based rules instead.
+# Cross-node kube-apiserver traffic arrives with identity remote-node (not kube-apiserver) in Cilium,
+# so both entities must be allowed for the webhook.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kube-apiserver-egress
+  namespace: monitoring
+spec:
+  endpointSelector: {}
+  egress:
+    - toEntities:
+        - kube-apiserver
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-kube-apiserver-ingress
+  namespace: monitoring
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEntities:
+        - kube-apiserver
+        - remote-node

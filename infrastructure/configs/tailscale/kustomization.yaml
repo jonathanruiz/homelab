@@ -1,3 +1,5 @@
 resources:
   - externalsecret.yaml
   - connector.yaml
+  - networkpolicy.yaml
+  - ciliumnetworkpolicy.yaml
