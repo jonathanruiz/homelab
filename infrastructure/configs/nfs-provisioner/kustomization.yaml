@@ -1,3 +1,2 @@
 resources:
-  - clusterstore.yaml
   - networkpolicy.yaml

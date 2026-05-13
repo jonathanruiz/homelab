@@ -5,3 +5,4 @@ resources:
   - crowdsec
   - cloudflare-tunnel
   - cilium
+  - nfs-provisioner

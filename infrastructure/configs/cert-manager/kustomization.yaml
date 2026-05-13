@@ -1,3 +1,4 @@
 resources:
   - cluster-issuer.yaml
   - external-secret.yaml
+  - networkpolicy.yaml
