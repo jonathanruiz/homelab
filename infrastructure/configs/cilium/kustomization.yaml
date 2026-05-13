@@ -1,0 +1,3 @@
+resources:
+  - loadbalancerpool.yaml
+  - l2policy.yaml

@@ -4,3 +4,4 @@ resources:
   - external-secrets
   - crowdsec
   - cloudflare-tunnel
+  - cilium
