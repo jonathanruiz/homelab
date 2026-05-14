@@ -14,33 +14,11 @@ provider "proxmox" {
 }
 
 # ---------------------------------------------------------------------------
-# Repository management
-# ---------------------------------------------------------------------------
-
-resource "proxmox_apt_standard_repository" "enterprise" {
-  node    = var.proxmox_node
-  handle  = "pve-enterprise"
-  status = false
-}
-
-resource "proxmox_apt_standard_repository" "no_subscription" {
-  node    = var.proxmox_node
-  handle  = "no-subscription"
-  status = true
-}
-
-resource "proxmox_apt_standard_repository" "ceph_enterprise" {
-  node    = var.proxmox_node
-  handle  = "ceph-enterprise"
-  status = false
-}
-
-# ---------------------------------------------------------------------------
 # Debian 13 cloud image
 # Prerequisite: "local" storage must have "ISO Image" content type enabled
 # ---------------------------------------------------------------------------
 
-resource "proxmox_virtual_environment_download_file" "debian_13_cloud" {
+resource "proxmox_download_file" "debian_13_cloud" {
   content_type = "iso"
   datastore_id = "local"
   node_name    = var.proxmox_node

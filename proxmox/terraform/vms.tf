@@ -27,7 +27,7 @@ resource "proxmox_virtual_environment_vm" "media" {
 
   disk {
     datastore_id = var.vm_datastore
-    file_id      = proxmox_virtual_environment_download_file.debian_12_cloud.id
+    file_id      = proxmox_download_file.debian_13_cloud.id
     interface    = "virtio0"
     size         = 50
     discard      = "on"
@@ -81,7 +81,7 @@ resource "proxmox_virtual_environment_vm" "home_ai" {
 
   disk {
     datastore_id = var.vm_datastore
-    file_id      = proxmox_virtual_environment_download_file.debian_12_cloud.id
+    file_id      = proxmox_download_file.debian_13_cloud.id
     interface    = "virtio0"
     size         = 50
     discard      = "on"
@@ -136,7 +136,7 @@ resource "proxmox_virtual_environment_vm" "network" {
 
   disk {
     datastore_id = var.vm_datastore
-    file_id      = proxmox_virtual_environment_download_file.debian_12_cloud.id
+    file_id      = proxmox_download_file.debian_13_cloud.id
     interface    = "virtio0"
     size         = 20
     discard      = "on"
