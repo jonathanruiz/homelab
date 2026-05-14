@@ -5,7 +5,7 @@ variable "proxmox_endpoint" {
 }
 
 variable "proxmox_api_token" {
-  description = "Proxmox API token (format: user@realm!token-name=uuid)"
+  description = "Proxmox API token (format: root@pam!terraform=uuid — must be root@pam for full API access)"
   type        = string
   sensitive   = true
 }
