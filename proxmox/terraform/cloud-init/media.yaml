@@ -1,0 +1,29 @@
+#cloud-config
+hostname: vm-media
+fqdn: vm-media.local.ruizops.com
+manage_etc_hosts: true
+
+users:
+  - name: deploy
+    groups: [sudo, docker]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+package_update: true
+package_upgrade: true
+packages:
+  - qemu-guest-agent
+  - curl
+  - ca-certificates
+  - gnupg
+  - nfs-common
+  - htop
+
+runcmd:
+  - systemctl enable qemu-guest-agent
+  - systemctl start qemu-guest-agent
+
+timezone: ${timezone}
+locale: en_US.UTF-8
