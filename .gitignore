@@ -8,3 +8,4 @@ talos/
 **/.terraform.lock.hcl
 **/terraform.tfvars
 **/*.tfvars.example
+**/.env.terraform
