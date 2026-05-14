@@ -42,13 +42,11 @@ variable "ssh_public_key" {
 variable "gateway_ip" {
   description = "Default gateway for all VMs"
   type        = string
-  default     = "10.0.10.1"
 }
 
 variable "dns_servers" {
   description = "DNS servers for VMs (will be updated to Pihole IP after VM 3 is up)"
   type        = list(string)
-  default     = ["10.0.10.1"]
 }
 
 variable "vm_media_ip" {
@@ -69,5 +67,9 @@ variable "vm_network_ip" {
 variable "timezone" {
   description = "Timezone for all VMs"
   type        = string
-  default     = "America/Chicago"
+}
+
+variable "nas_ip" {
+  description = "Synology NAS IP address for NFS storage"
+  type        = string
 }
