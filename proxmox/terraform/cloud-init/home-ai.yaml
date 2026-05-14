@@ -1,6 +1,6 @@
 #cloud-config
-hostname: vm-home-ai
-fqdn: vm-home-ai.local.ruizops.com
+hostname: vmdkr002
+fqdn: vmdkr002.local.ruizops.com
 manage_etc_hosts: true
 
 users:

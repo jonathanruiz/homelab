@@ -1,6 +1,6 @@
 #cloud-config
-hostname: vm-media
-fqdn: vm-media.local.ruizops.com
+hostname: vmdkr001
+fqdn: vmdkr001.local.ruizops.com
 manage_etc_hosts: true
 
 users:

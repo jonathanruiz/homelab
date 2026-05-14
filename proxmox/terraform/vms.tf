@@ -1,9 +1,9 @@
 # ---------------------------------------------------------------------------
-# VM 1 — Media Stack (Jellyfin, Sonarr, Radarr, Prowlarr, qBittorrent)
+# VM 1 — Media Stack (Jellyfin)
 # ---------------------------------------------------------------------------
 
 resource "proxmox_virtual_environment_vm" "media" {
-  name      = "vm-media"
+  name      = "vmdkr001"
   node_name = var.proxmox_node
   tags      = ["debian", "docker", "media"]
 
@@ -57,7 +57,7 @@ resource "proxmox_virtual_environment_vm" "media" {
 # ---------------------------------------------------------------------------
 
 resource "proxmox_virtual_environment_vm" "home_ai" {
-  name      = "vm-home-ai"
+  name      = "vmdkr002"
   node_name = var.proxmox_node
   tags      = ["debian", "docker", "home-ai"]
 
@@ -112,7 +112,7 @@ resource "proxmox_virtual_environment_vm" "home_ai" {
 # ---------------------------------------------------------------------------
 
 resource "proxmox_virtual_environment_vm" "network" {
-  name      = "vm-network"
+  name      = "vmdkr003"
   node_name = var.proxmox_node
   tags      = ["debian", "docker", "network"]
 
