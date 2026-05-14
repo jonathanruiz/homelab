@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "~> 0.73"
+      version = "~> 0.106.0"
     }
   }
 }
@@ -17,35 +17,35 @@ provider "proxmox" {
 # Repository management
 # ---------------------------------------------------------------------------
 
-resource "proxmox_virtual_environment_apt_standard_repository" "enterprise" {
+resource "proxmox_apt_standard_repository" "enterprise" {
   node    = var.proxmox_node
   handle  = "pve-enterprise"
-  enabled = false
+  status = false
 }
 
-resource "proxmox_virtual_environment_apt_standard_repository" "no_subscription" {
+resource "proxmox_apt_standard_repository" "no_subscription" {
   node    = var.proxmox_node
   handle  = "no-subscription"
-  enabled = true
+  status = true
 }
 
-resource "proxmox_virtual_environment_apt_standard_repository" "ceph_enterprise" {
+resource "proxmox_apt_standard_repository" "ceph_enterprise" {
   node    = var.proxmox_node
   handle  = "ceph-enterprise"
-  enabled = false
+  status = false
 }
 
 # ---------------------------------------------------------------------------
-# Debian 12 cloud image
+# Debian 13 cloud image
 # Prerequisite: "local" storage must have "ISO Image" content type enabled
 # ---------------------------------------------------------------------------
 
-resource "proxmox_virtual_environment_download_file" "debian_12_cloud" {
+resource "proxmox_virtual_environment_download_file" "debian_13_cloud" {
   content_type = "iso"
   datastore_id = "local"
   node_name    = var.proxmox_node
-  url          = "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
-  file_name    = "debian-12-genericcloud-amd64.img"
+  url          = "https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
+  file_name    = "debian-13-genericcloud-amd64.img"
 }
 
 # ---------------------------------------------------------------------------
