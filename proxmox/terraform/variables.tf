@@ -73,8 +73,3 @@ variable "timezone" {
   description = "Timezone for all VMs"
   type        = string
 }
-
-variable "nas_ip" {
-  description = "Synology NAS IP address for NFS storage"
-  type        = string
-}

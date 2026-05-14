@@ -39,26 +39,13 @@ op read "op://VAULT/SSH_NAME/SSH_PUBLIC_KEY" | ssh root@IP_ADDRESS "mkdir -p ~/.
 ssh-add ~/.ssh/id_ed25519
 ```
 
-## 6. Configure Synology NAS NFS share
-
-In Synology DSM:
-
-1. Create shared folder named `proxmox`
-2. **Control Panel → File Services → NFS** → enable NFS
-3. **Control Panel → Shared Folder → proxmox → Edit → NFS Permissions**:
-   - Hostname/IP: `X.X.X.X/XX`
-   - Privilege: `Read/Write`
-   - Squash: `No mapping`
-   - Enable: `Allow connections from non-privileged ports`
-   - Enable: `Allow users to access mounted subfolders`
-
-## 7. Download Debian cloud image
+## 6. Download Debian cloud image
 
 In Proxmox UI: **local → ISO Images → Download from URL**
 
 Use the Debian genericcloud qcow2 URL from `cloud.debian.org`. The `proxmox_download_file` Terraform resource requires `root@pam` — if it fails with a 403 on the URL metadata check, download via the UI instead and reference the file directly via `var.vm_base_image`.
 
-## 8. Provision VMs with Terraform
+## 7. Provision VMs with Terraform
 
 ```bash
 cd proxmox/terraform
@@ -79,7 +66,7 @@ op run --env-file=.env.terraform -- terraform apply
 
 Secrets (`proxmox_api_token`, `ssh_public_key`) are injected at runtime via 1Password — never stored on disk.
 
-## 9. SSH into VMs
+## 8. SSH into VMs
 
 ```bash
 ssh deploy@<vm_media_ip>    # vmdkr001 — Media stack
