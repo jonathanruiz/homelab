@@ -22,6 +22,11 @@ variable "proxmox_node" {
   default     = "pve001"
 }
 
+variable "promxmox_ssh_user" {
+  description = "SSH username for Proxmox host (must have SSH key access)"
+  type        = string
+}
+
 variable "vm_datastore" {
   description = "Proxmox datastore for VM disks — local storage only, never NFS"
   type        = string
