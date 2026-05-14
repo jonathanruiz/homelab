@@ -5,6 +5,7 @@
 resource "proxmox_virtual_environment_vm" "media" {
   name      = "vmdkr001"
   node_name = var.proxmox_node
+  vm_id     = 100
   tags      = ["debian", "docker", "media"]
 
   cpu {
@@ -59,6 +60,7 @@ resource "proxmox_virtual_environment_vm" "media" {
 resource "proxmox_virtual_environment_vm" "home_ai" {
   name      = "vmdkr002"
   node_name = var.proxmox_node
+  vm_id     = 101
   tags      = ["debian", "docker", "home-ai"]
 
   cpu {
@@ -114,6 +116,7 @@ resource "proxmox_virtual_environment_vm" "home_ai" {
 resource "proxmox_virtual_environment_vm" "network" {
   name      = "vmdkr003"
   node_name = var.proxmox_node
+  vm_id     = 102
   tags      = ["debian", "docker", "network"]
 
   cpu {
