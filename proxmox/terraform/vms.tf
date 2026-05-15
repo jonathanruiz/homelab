@@ -22,8 +22,9 @@ resource "proxmox_virtual_environment_vm" "media" {
   }
 
   network_device {
-    bridge = "vmbr0"
-    model  = "virtio"
+    bridge  = "vmbr0"
+    model   = "virtio"
+    vlan_id = 30
   }
 
   disk {
@@ -77,8 +78,9 @@ resource "proxmox_virtual_environment_vm" "home_ai" {
   }
 
   network_device {
-    bridge = "vmbr0"
-    model  = "virtio"
+    bridge  = "vmbr0"
+    model   = "virtio"
+    vlan_id = 30
   }
 
   disk {
@@ -133,8 +135,9 @@ resource "proxmox_virtual_environment_vm" "network" {
   }
 
   network_device {
-    bridge = "vmbr0"
-    model  = "virtio"
+    bridge  = "vmbr0"
+    model   = "virtio"
+    vlan_id = 30
   }
 
   disk {
