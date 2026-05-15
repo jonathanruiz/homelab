@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: synology
+  namespace: synology
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`synology.local.ruizops.com`)
+      kind: Rule
+      priority: 100
+      services:
+        - name: synology-nas
+          namespace: synology
+          port: 5000
+  tls:
+    secretName: synology-tls

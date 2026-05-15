@@ -114,6 +114,24 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: cloudflare-tunnel
 ---
+# Allow Traefik to reach the Synology NAS (external IP)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-synology-egress
+  namespace: traefik
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.0.40.30/32
+      ports:
+        - port: 5000
+          protocol: TCP
+---
 # Allow Prometheus scraping from monitoring namespace
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
