@@ -47,6 +47,7 @@ spec:
       ports:
         - port: 8000
         - port: 8443
+        - port: 22
 ---
 # Allow Traefik to reach any app service in the cluster
 apiVersion: networking.k8s.io/v1
@@ -114,6 +115,21 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: cloudflare-tunnel
 ---
+# Allow Traefik to download plugins from plugins.traefik.io on startup
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-internet-egress
+  namespace: traefik
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 443
+          protocol: TCP
+---
 # Allow Traefik to reach the Synology NAS (external IP)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -130,6 +146,26 @@ spec:
             cidr: 10.0.40.30/32
       ports:
         - port: 5000
+          protocol: TCP
+---
+# Allow Traefik to reach Proxmox (web UI and SSH)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-proxmox-egress
+  namespace: traefik
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.0.10.50/32
+      ports:
+        - port: 8006
+          protocol: TCP
+        - port: 22
           protocol: TCP
 ---
 # Allow Prometheus scraping from monitoring namespace
