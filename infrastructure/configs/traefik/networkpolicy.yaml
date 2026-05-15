@@ -148,11 +148,11 @@ spec:
         - port: 5000
           protocol: TCP
 ---
-# Allow Traefik to reach Proxmox (web UI and SSH)
+# Allow Traefik to reach pve001 (web UI and SSH)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-proxmox-egress
+  name: allow-pve001-egress
   namespace: traefik
 spec:
   podSelector: {}

@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: proxmox-pve
-  namespace: proxmox
+  name: ${HOST_NAME}
+  namespace: ${HOST_NAME}
 spec:
   type: ClusterIP
   ports:
@@ -13,11 +13,11 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: proxmox-pve
-  namespace: proxmox
+  name: ${HOST_NAME}
+  namespace: ${HOST_NAME}
 subsets:
   - addresses:
-      - ip: 10.0.10.50
+      - ip: ${HOST_IP}
     ports:
       - name: https
         port: 8006
@@ -25,8 +25,8 @@ subsets:
 apiVersion: v1
 kind: Service
 metadata:
-  name: proxmox-ssh
-  namespace: proxmox
+  name: ${HOST_NAME}-ssh
+  namespace: ${HOST_NAME}
 spec:
   type: ClusterIP
   ports:
@@ -37,11 +37,11 @@ spec:
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: proxmox-ssh
-  namespace: proxmox
+  name: ${HOST_NAME}-ssh
+  namespace: ${HOST_NAME}
 subsets:
   - addresses:
-      - ip: 10.0.10.50
+      - ip: ${HOST_IP}
     ports:
       - name: ssh
         port: 22

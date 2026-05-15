@@ -1,4 +1,6 @@
 resources:
+  - namespace.yaml
+  - service.yaml
   - certificate.yaml
   - servertransport.yaml
   - ingressroute.yaml
