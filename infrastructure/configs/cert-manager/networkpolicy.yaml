@@ -48,7 +48,7 @@ spec:
         - port: 443
           protocol: TCP
 ---
-# ACME DNS challenge via Cloudflare API and OCSP
+# ACME DNS challenge via Cloudflare API, OCSP, and external DNS propagation checks
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -62,6 +62,10 @@ spec:
     - ports:
         - port: 443
           protocol: TCP
+        - port: 53
+          protocol: TCP
+        - port: 53
+          protocol: UDP
 ---
 # cainjector, webhook, and controller communicate internally
 apiVersion: networking.k8s.io/v1
