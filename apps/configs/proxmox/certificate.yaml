@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: proxmox-cert
+  namespace: proxmox
+spec:
+  secretName: proxmox-tls
+  dnsNames:
+    - proxmox.local.ruizops.com
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
