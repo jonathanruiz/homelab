@@ -38,14 +38,14 @@ spec:
               echo "Node ID: ${NODE_ID}"
 
               echo "Assigning layout..."
-              curl -sf -X POST \
+              curl -s -w "\nHTTP %{http_code}\n" -X POST \
                 -H "$AUTH" \
                 -H "Content-Type: application/json" \
                 -d "[{\"nodeId\":\"${NODE_ID}\",\"zone\":\"homelab\",\"capacity\":53687091200,\"tags\":[],\"remove\":false}]" \
                 "${ADMIN}/v2/UpdateClusterLayout"
 
               echo "Applying layout version 1..."
-              curl -f -X POST \
+              curl -s -w "\nHTTP %{http_code}\n" -X POST \
                 -H "$AUTH" \
                 -H "Content-Type: application/json" \
                 -d '{"version":1}' \
