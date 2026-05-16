@@ -12,6 +12,6 @@ spec:
       services:
         - name: garage-ui
           namespace: garage-ui
-          port: 3000
+          port: 3909
   tls:
     secretName: garage-ui-tls
