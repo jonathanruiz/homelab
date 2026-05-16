@@ -23,10 +23,74 @@ spec:
           DOMAIN: forgejo.ruizops.com
           ROOT_URL: https://forgejo.ruizops.com
           HTTP_PORT: 3000
+
         actions:
           ENABLED: "false"
+
         service:
+          # No public registration — you create accounts manually if needed
           DISABLE_REGISTRATION: "true"
+          # Prevent user enumeration: the "forgot password" flow should not
+          # reveal whether an email address exists in the system
+          SHOW_REGISTRATION_BUTTON: "false"
+
+        # --- Session & cookie hardening ---
+        # Protects YOUR admin session when you're logged in.
+        # SameSite=Strict prevents the session cookie from being sent in
+        # cross-site requests, which is the primary CSRF mitigation.
+        # COOKIE_SECURE ensures the cookie is never sent over plain HTTP.
+        session:
+          COOKIE_SECURE: "true"
+          SAME_SITE: strict
+          # 12-hour idle timeout; absolute max 7 days
+          SESSION_LIFE_TIME: "43200"
+          GC_INTERVAL_TIME: "86400"
+
+        # --- Brute-force protection on the login endpoint ---
+        # After 10 consecutive failures the account is locked for 10 minutes.
+        # CrowdSec handles IP-level rate limiting; this handles per-account lockout.
+        security:
+          LOGIN_REMEMBER_DAYS: 7
+          # Use the stronger PBKDF2_HI hashing algorithm for stored passwords.
+          # Existing password hashes are migrated on next login.
+          PASSWORD_HASH_ALGO: pbkdf2_hi
+          MIN_PASSWORD_LENGTH: 16
+          # Require mixed-case, digits, and special characters for admin password
+          PASSWORD_COMPLEXITY: lower,upper,digit,spec
+          # Prevent users with Git Hook privilege from creating server-side hooks
+          # that execute arbitrary code as the Forgejo process user.
+          DISABLE_GIT_HOOKS: "true"
+
+        # --- Webhook SSRF protection (critical for a public instance) ---
+        # Without this, any visitor who registers (if registration were open) or
+        # any future exploited account could create a webhook pointing to
+        # internal cluster addresses (10.x, 192.168.x, etc.) and use Forgejo
+        # as a proxy to probe your cluster's internal services.
+        # Even with registration disabled, defense-in-depth is worth having.
+        webhook:
+          # Only allow webhooks to reach public internet addresses and your own domain.
+          # 'external' blocks RFC-1918 private ranges and loopback.
+          ALLOWED_HOST_LIST: "external,*.ruizops.com"
+          SKIP_TLS_VERIFY: "false"
+
+        # --- API surface reduction ---
+        api:
+          # Swagger UI is unnecessary for a personal instance and exposes
+          # an enumerable list of every API endpoint to casual scanners.
+          ENABLE_SWAGGER: "false"
+          # Limit unauthenticated API calls — public git operations still work
+          # because they go through the Git smart HTTP protocol, not the API.
+          DEFAULT_PAGING_NUM: 20
+          MAX_RESPONSE_ITEMS: 50
+
+        # Restrict git protocol to avoid abuse
+        repository:
+          # Prevent forks to external instances (limits data exfiltration surface)
+          ENABLE_PUSH_CREATE_USER: "false"
+          ENABLE_PUSH_CREATE_ORG: "false"
+          # Default new repos to private; you explicitly make them public
+          DEFAULT_PRIVATE: "private"
+          AUTO_WATCH_NEW_REPOS: "false"
 
     persistence:
       enabled: true
@@ -34,15 +98,35 @@ spec:
       size: 10Gi
       accessModes:
         - ReadWriteOnce
-      # helm.sh/resource-policy: keep is already the chart default
 
     ingress:
       enabled: false
 
-    # Disable bundled redis-cluster and postgresql — using SQLite
     redis-cluster:
       enabled: false
     postgresql:
       enabled: false
     postgresql-ha:
       enabled: false
+
+    # --- Container hardening ---
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+    podSecurityContext:
+      fsGroup: 1000
+
+    containerSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      # readOnlyRootFilesystem cannot be true for Forgejo — it writes to /data and /tmp

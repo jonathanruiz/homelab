@@ -10,3 +10,53 @@ spec:
       crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiKeyFile: /etc/crowdsec/api-key
+---
+#    Security response headers
+#    No authentication — this is a public site.
+#    These headers protect your *admin* session when you're logged in,
+#    and protect visitors from clickjacking and MIME attacks.
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: forgejo-security-headers
+  namespace: forgejo
+spec:
+  headers:
+    # Prevent Forgejo pages from being framed (clickjacking protection)
+    frameDeny: true
+    # Block MIME type sniffing
+    contentTypeNosniff: true
+    # Force HTTPS for 1 year, including subdomains
+    forceSTSHeader: true
+    stsSeconds: 31536000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    # Only send referrer to same origin (don't leak URLs to third parties)
+    referrerPolicy: "strict-origin-when-cross-origin"
+    # Restrict browser features Forgejo doesn't need
+    permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=()"
+    # Basic CSP — allows Forgejo's own assets, blocks inline script injection
+    # Forgejo uses inline styles/scripts, so unsafe-inline is unfortunately needed;
+    # this still blocks third-party script injection from other origins.
+    contentSecurityPolicy: >-
+      default-src 'self';
+      script-src 'self' 'unsafe-inline';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https:;
+      font-src 'self';
+      connect-src 'self';
+      frame-ancestors 'none';
+      base-uri 'self';
+      form-action 'self'
+---
+# Chain — CrowdSec runs first, then headers are set
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: forgejo-chain
+  namespace: forgejo
+spec:
+  chain:
+    middlewares:
+      - name: crowdsec-bouncer
+      - name: forgejo-security-headers

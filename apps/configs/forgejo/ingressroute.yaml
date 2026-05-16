@@ -7,11 +7,25 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`forgejo.local.ruizops.com`) || Host(`forgejo.ruizops.com`)
+    # Public route — full middleware chain (CrowdSec + security headers)
+    - match: Host(`forgejo.ruizops.com`)
       kind: Rule
       priority: 100
       middlewares:
-        - name: crowdsec-bouncer
+        - name: forgejo-chain
+      services:
+        - name: forgejo-http
+          namespace: forgejo
+          port: 3000
+
+    # Internal/Tailscale route — security headers still apply, CrowdSec still runs.
+    # Priority is lower so the public route takes precedence if both match
+    # (they won't in practice since hostnames differ, but explicit is better).
+    - match: Host(`forgejo.local.ruizops.com`)
+      kind: Rule
+      priority: 90
+      middlewares:
+        - name: forgejo-chain
       services:
         - name: forgejo-http
           namespace: forgejo
