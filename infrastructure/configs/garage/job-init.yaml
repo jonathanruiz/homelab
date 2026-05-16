@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: garage-init
+  namespace: garage
+spec:
+  backoffLimit: 20
+  template:
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: garage-init
+      containers:
+        - name: init
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Waiting for garage-0 to be Running..."
+              until kubectl get pod -n garage garage-0 --no-headers | grep -q Running; do
+                sleep 3
+              done
+
+              echo "Checking if layout is already applied..."
+              if kubectl exec -n garage garage-0 -- /garage layout show 2>/dev/null | grep -q "^zone:"; then
+                echo "Layout already applied, nothing to do."
+                exit 0
+              fi
+
+              echo "Fetching node ID..."
+              NODE_ID=$(kubectl exec -n garage garage-0 -- /garage node id -q 2>/dev/null | tr -d '[:space:]')
+              echo "Node ID: ${NODE_ID}"
+
+              echo "Assigning layout..."
+              kubectl exec -n garage garage-0 -- /garage layout assign -z homelab -c 50G ${NODE_ID}
+
+              echo "Applying layout version 1..."
+              kubectl exec -n garage garage-0 -- /garage layout apply --version 1
+
+              echo "Garage initialization complete!"
