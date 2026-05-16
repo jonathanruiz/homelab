@@ -30,6 +30,11 @@ spec:
                 secretKeyRef:
                   name: garage-ui-secrets
                   key: admin-token
+            - name: AUTH_USER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: garage-ui-secrets
+                  key: auth
           resources:
             requests:
               cpu: 50m
