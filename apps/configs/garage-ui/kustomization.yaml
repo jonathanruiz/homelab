@@ -1,4 +1,0 @@
-resources:
-  - externalsecret.yaml
-  - certificate.yaml
-  - ingressroute.yaml

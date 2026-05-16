@@ -43,9 +43,6 @@ data:
         - Synology:
             - abbr: SY
               href: https://synology.local.ruizops.com
-        - Garage:
-            - abbr: GR
-              href: https://garage-ui.local.ruizops.com
   services.yaml: ""
   widgets.yaml: |
     - search:
