@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: garage-init
+  namespace: garage
+spec:
+  backoffLimit: 20
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: init
+          image: alpine:3.19
+          command:
+            - /bin/sh
+            - -c
+            - |
+              apk add --no-cache curl > /dev/null 2>&1
+
+              ADMIN="http://garage-admin.garage.svc.cluster.local:3903"
+
+              echo "Waiting for Garage admin API..."
+              until curl -sf -H "Authorization: Bearer ${ADMIN_TOKEN}" "${ADMIN}/v1/health"; do
+                sleep 3
+              done
+
+              echo "Fetching node ID..."
+              STATUS=$(curl -sf -H "Authorization: Bearer ${ADMIN_TOKEN}" "${ADMIN}/v1/status")
+              NODE_ID=$(echo "${STATUS}" | grep -o '"node":"[^"]*"' | head -1 | cut -d'"' -f4)
+              echo "Node ID: ${NODE_ID}"
+
+              echo "Assigning layout..."
+              curl -sf -X POST \
+                -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d "{\"${NODE_ID}\":{\"zone\":\"homelab\",\"capacity\":53687091200}}" \
+                "${ADMIN}/v1/layout" || true
+
+              echo "Applying layout version 1..."
+              curl -f -X POST \
+                -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d '{"version":1}' \
+                "${ADMIN}/v1/layout/apply" || echo "Layout already applied, skipping."
+
+              echo "Garage initialization complete!"
+          env:
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: garage-secrets
+                  key: admin-token
