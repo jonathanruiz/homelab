@@ -6,3 +6,4 @@ resources:
   - nfs-provisioner
   - crowdsec
   - cloudflare-tunnel
+  - garage

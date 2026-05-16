@@ -6,3 +6,4 @@ resources:
   - cloudflare-tunnel
   - cilium
   - nfs-provisioner
+  - garage

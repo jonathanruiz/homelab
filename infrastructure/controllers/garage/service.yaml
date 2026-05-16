@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: garage-s3
+  namespace: garage
+spec:
+  selector:
+    app: garage
+  ports:
+    - port: 3900
+      targetPort: s3-api
+      name: s3-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: garage-admin
+  namespace: garage
+spec:
+  selector:
+    app: garage
+  ports:
+    - port: 3903
+      targetPort: admin
+      name: admin
+---
+# Headless service for StatefulSet RPC
+apiVersion: v1
+kind: Service
+metadata:
+  name: garage-rpc
+  namespace: garage
+spec:
+  clusterIP: None
+  selector:
+    app: garage
+  ports:
+    - port: 3901
+      targetPort: rpc
+      name: rpc
