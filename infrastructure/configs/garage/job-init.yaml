@@ -21,7 +21,7 @@ spec:
               AUTH="Authorization: Bearer ${ADMIN_TOKEN}"
 
               echo "Waiting for Garage admin API..."
-              until curl -sf -H "$AUTH" "${ADMIN}/health" > /dev/null; do
+              until curl -s -o /dev/null -H "$AUTH" "${ADMIN}/health"; do
                 sleep 3
               done
 
