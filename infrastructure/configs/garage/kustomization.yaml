@@ -2,5 +2,3 @@ resources:
   - externalsecret.yaml
   - certificate.yaml
   - ingressroute.yaml
-  - job-init-rbac.yaml
-  - job-init.yaml
