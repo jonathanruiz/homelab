@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: garage-ui
+  namespace: garage-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: garage-ui
+  template:
+    metadata:
+      labels:
+        app: garage-ui
+    spec:
+      containers:
+        - name: garage-ui
+          image: khairul169/garage-webui:1.1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_BASE_URL
+              value: "http://garage-admin.garage.svc.cluster.local:3903"
+            - name: S3_ENDPOINT_URL
+              value: "http://garage-s3.garage.svc.cluster.local:3900"
+            - name: S3_REGION
+              value: "garage"
+            - name: API_ADMIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: garage-ui-secrets
+                  key: admin-token
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
