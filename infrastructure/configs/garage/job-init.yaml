@@ -15,33 +15,41 @@ spec:
             - /bin/sh
             - -c
             - |
-              apk add --no-cache curl > /dev/null 2>&1
+              apk add --no-cache curl jq > /dev/null 2>&1
 
               ADMIN="http://garage-admin.garage.svc.cluster.local:3903"
+              AUTH="Authorization: Bearer ${ADMIN_TOKEN}"
 
               echo "Waiting for Garage admin API..."
-              until curl -sf -H "Authorization: Bearer ${ADMIN_TOKEN}" "${ADMIN}/v1/health"; do
+              until curl -sf -H "$AUTH" "${ADMIN}/health" > /dev/null; do
                 sleep 3
               done
 
-              echo "Fetching node ID..."
-              STATUS=$(curl -sf -H "Authorization: Bearer ${ADMIN_TOKEN}" "${ADMIN}/v1/status")
-              NODE_ID=$(echo "${STATUS}" | grep -o '"node":"[^"]*"' | head -1 | cut -d'"' -f4)
+              echo "Checking layout version..."
+              STATUS=$(curl -sf -H "$AUTH" "${ADMIN}/v2/GetClusterStatus")
+              LAYOUT_VERSION=$(echo "$STATUS" | jq -r '.layoutVersion')
+
+              if [ "${LAYOUT_VERSION}" -gt 0 ]; then
+                echo "Layout version ${LAYOUT_VERSION} already applied, nothing to do."
+                exit 0
+              fi
+
+              NODE_ID=$(echo "$STATUS" | jq -r '.nodes[0].id')
               echo "Node ID: ${NODE_ID}"
 
               echo "Assigning layout..."
               curl -sf -X POST \
-                -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+                -H "$AUTH" \
                 -H "Content-Type: application/json" \
-                -d "{\"${NODE_ID}\":{\"zone\":\"homelab\",\"capacity\":53687091200}}" \
-                "${ADMIN}/v1/layout" || true
+                -d "[{\"nodeId\":\"${NODE_ID}\",\"zone\":\"homelab\",\"capacity\":53687091200,\"tags\":[],\"remove\":false}]" \
+                "${ADMIN}/v2/UpdateClusterLayout"
 
               echo "Applying layout version 1..."
               curl -f -X POST \
-                -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+                -H "$AUTH" \
                 -H "Content-Type: application/json" \
                 -d '{"version":1}' \
-                "${ADMIN}/v1/layout/apply" || echo "Layout already applied, skipping."
+                "${ADMIN}/v2/ApplyClusterLayout"
 
               echo "Garage initialization complete!"
           env:
