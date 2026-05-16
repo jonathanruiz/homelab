@@ -13,7 +13,6 @@ data:
 
     rpc_secret_env = "GARAGE_RPC_SECRET"
     rpc_bind_addr = "0.0.0.0:3901"
-    rpc_public_addr = "garage.garage.svc.cluster.local:3901"
 
     [s3_api]
     s3_region = "garage"
