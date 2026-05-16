@@ -1,0 +1,43 @@
+#cloud-config
+hostname: vmwks001
+fqdn: vmwks001.local.ruizops.com
+manage_etc_hosts: true
+
+users:
+  - name: ${workstation_username}
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+chpasswd:
+  list: |
+    ${workstation_username}:${workstation_password}
+  expire: false
+
+package_update: true
+package_upgrade: true
+packages:
+  - qemu-guest-agent
+  - curl
+  - ca-certificates
+  - htop
+  - gnome-core
+  - xrdp
+  - firefox-esr
+  - dbus-x11
+
+runcmd:
+  - systemctl enable qemu-guest-agent
+  - systemctl start qemu-guest-agent
+  - echo "gnome-session" > /home/${workstation_username}/.xsession
+  - chmod +x /home/${workstation_username}/.xsession
+  - chown ${workstation_username}:${workstation_username} /home/${workstation_username}/.xsession
+  - adduser xrdp ssl-cert
+  - systemctl enable xrdp
+  - systemctl restart xrdp
+
+timezone: ${timezone}
+locale: en_US.UTF-8

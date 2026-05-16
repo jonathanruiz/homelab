@@ -27,3 +27,13 @@ output "vm_network_ip" {
   description = "IP address of the Network stack VM (Pihole)"
   value       = var.vm_network_ip
 }
+
+output "vm_workstation_id" {
+  description = "VM ID for the workstation VM"
+  value       = proxmox_virtual_environment_vm.workstation.id
+}
+
+output "vm_workstation_ip" {
+  description = "IP address of the workstation VM (RDP on port 3389)"
+  value       = var.vm_workstation_ip
+}

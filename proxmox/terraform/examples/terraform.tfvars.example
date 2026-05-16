@@ -20,4 +20,7 @@ vm_media_ip   = "x.x.x.xx"
 vm_home_ai_ip = "x.x.x.xx"
 vm_network_ip = "x.x.x.xx"
 
+vm_workstation_ip      = "x.x.x.xx"
+vm_workstation_gateway = "x.x.x.x"
+
 timezone = "America/Chicago"

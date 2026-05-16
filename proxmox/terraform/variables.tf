@@ -69,6 +69,28 @@ variable "vm_network_ip" {
   type        = string
 }
 
+variable "vm_workstation_ip" {
+  description = "Static IP for workstation VM (vmwks001) on VLAN 50"
+  type        = string
+}
+
+variable "vm_workstation_gateway" {
+  description = "Gateway for VLAN 50 (workstation network)"
+  type        = string
+}
+
+variable "vm_workstation_username" {
+  description = "Login username for the workstation (used for SSH and XRDP)"
+  type        = string
+  sensitive   = true
+}
+
+variable "vm_workstation_password" {
+  description = "Login password for the workstation user (used for XRDP)"
+  type        = string
+  sensitive   = true
+}
+
 variable "timezone" {
   description = "Timezone for all VMs"
   type        = string

@@ -89,3 +89,19 @@ resource "proxmox_virtual_environment_file" "cloud_init_network" {
     file_name = "cloud-init-network.yaml"
   }
 }
+
+resource "proxmox_virtual_environment_file" "cloud_init_workstation" {
+  content_type = "snippets"
+  datastore_id = var.snippets_datastore
+  node_name    = var.proxmox_node
+
+  source_raw {
+    data = templatefile("${path.module}/cloud-init/workstation.yaml", {
+      ssh_public_key       = var.ssh_public_key
+      timezone             = var.timezone
+      workstation_username = var.vm_workstation_username
+      workstation_password = var.vm_workstation_password
+    })
+    file_name = "cloud-init-workstation.yaml"
+  }
+}
