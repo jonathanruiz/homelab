@@ -5,6 +5,17 @@ terraform {
       version = "~> 0.106.0"
     }
   }
+
+  backend "s3" {
+    bucket = "terraform-state"
+    key    = "proxmox/terraform.tfstate"
+    region = "garage"
+    endpoint                    = "https://garage.local.ruizops.com"
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
+    skip_region_validation      = true
+    force_path_style            = true
+  }
 }
 
 provider "proxmox" {

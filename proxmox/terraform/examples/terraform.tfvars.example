@@ -1,0 +1,23 @@
+# Copy to terraform.tfvars and fill in values — never commit terraform.tfvars
+#
+# Secrets (proxmox_api_token, ssh_public_key) are NOT set here.
+# They are injected at runtime via 1Password:
+#   op run --env-file=.env.terraform -- terraform <command>
+# See .env.terraform.example for the secret references.
+
+proxmox_endpoint = "https://<HOST_NAME>.<DOMAIN_NAME>:8006/"
+proxmox_insecure = true  # set false once you've replaced the Proxmox self-signed cert
+
+proxmox_node       = "<HOST_NAME>"
+promxmox_ssh_user  = "USERNAME"  
+vm_datastore       = "local-lvm"
+snippets_datastore = "local"
+
+gateway_ip  = "x.x.x.x"
+dns_servers = ["x.x.x.x"]  # update to vm_network_ip after Pihole is running
+
+vm_media_ip   = "x.x.x.xx"
+vm_home_ai_ip = "x.x.x.xx"
+vm_network_ip = "x.x.x.xx"
+
+timezone = "America/Chicago"
