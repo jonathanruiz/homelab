@@ -8,7 +8,7 @@ A GitOps homelab running on Talos Linux Kubernetes (1 control plane, 3 workers) 
 
 ## 1. Install Proxmox VE
 
-Install Proxmox VE on the Protectli Vault. Set the hostname to `pve001` and FQDN to `pve001.local.<DOMAIN_NAME>.com`.
+Install Proxmox VE on the Protectli Vault. Set the hostname to `<HOST_NAME>` and FQDN to `<HOST_NAME>.local.<DOMAIN_NAME>.com`.
 
 ## 2. Post-install script
 
@@ -78,44 +78,72 @@ ssh deploy@<vm_network_ip>  # vmdkr003 — Network stack
 
 # Talos Setup
 
-1 Control Plane
-3 Worker Nodes
-
-Commands to run
+1 Control Plane, 3 Worker Nodes. Run all commands from `talos/production/`.
 
 ```bash
-talosctl get secrets -o talos-secrets.yaml
+# Generate secrets (only once per cluster lifetime)
+talosctl gen secrets -o talos-secrets.yaml
 
-talosctl gen config --with-secrets <cluster-name> https://<control-plane-ip>:6443
+# Generate machine configs from secrets
+talosctl gen config --with-secrets talos-secrets.yaml <cluster-name> https://<control-plane-ip>:6443
 
-# Apply for all control plane nodes
+# Apply config to all control plane nodes
 talosctl apply-config --insecure -n <control-plane-ip> --file controlplane.yaml
 
-# This command only happens once in the clusters life. It is only done for the first control plane node. Do not apply for future control plane nodes, let alone worker nodes.
+# Bootstrap the cluster — only run once, only on the first control plane node
 talosctl bootstrap -n <control-plane-ip> -e <control-plane-ip> --talosconfig ./talosconfig
 
-# Apply for all worker nodes
+# Apply config to all worker nodes
 talosctl apply-config --insecure -n <worker-ip> --file worker.yaml
+
+# Retrieve kubeconfig
+talosctl kubeconfig --talosconfig ./talosconfig -n <control-plane-ip> ../kubeconfig
 ```
 
-# Flux Setup
+---
+
+# Cilium Bootstrap
+
+Cilium must be installed before Flux, since it is the CNI — without it no pods can run and Flux cannot start. The bootstrap manifest is generated from the same Helm values used by the `HelmRelease` in `infrastructure/controllers/cilium/`. Once Flux is running it takes over managing Cilium.
 
 ```bash
-export GITHUB_TOKEN=<GITHUB_TOKEN>
-flux bootstrap github --token-auth --owner=jonathanruiz --repository=homelab --branch=main --path=./clusters/production --personal
+# Add the Cilium Helm repo
+helm repo add cilium https://helm.cilium.io/
+helm repo update
 
+# Render the bootstrap manifest (run from repo root)
+helm template cilium cilium/cilium \
+  --version 1.19.3 \
+  --namespace kube-system \
+  --set kubeProxyReplacement=true \
+  --set k8sServiceHost=localhost \
+  --set k8sServicePort=7445 \
+  --set cgroup.autoMount.enabled=false \
+  --set cgroup.hostRoot=/sys/fs/cgroup \
+  --set ipam.mode=kubernetes \
+  --set operator.replicas=1 \
+  --set l2announcements.enabled=true \
+  --set externalIPs.enabled=true \
+  --set securityContext.capabilities.ciliumAgent='{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}' \
+  --set securityContext.capabilities.cleanCiliumState='{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}' \
+  > talos/cilium-bootstrap.yaml
+
+# Apply to the cluster
+kubectl --kubeconfig=talos/kubeconfig apply -f talos/cilium-bootstrap.yaml
 ```
+
+---
 
 # Secret
 
-To get things rolling, I needed to manually create a secret in the `external-secrets` namespace so that Azure Key Vault can be accessed by the `external-secrets` service account.
+Before running Flux bootstrap, manually create the Azure Key Vault credentials secret in the cluster. The `external-secrets` controller needs this to access Azure Key Vault — it cannot be managed by Flux itself since Flux depends on it.
 
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
-name: azure-secret-creds
-namespace: external-secrets
+  name: azure-secret-creds
+  namespace: external-secrets
 type: Opaque
 stringData:
   clientId: "CLIENT_ID"
@@ -124,8 +152,15 @@ stringData:
   akvUrl: "https://KEY_VAULT_NAME.vault.azure.net/"
 ```
 
-This needs to be deployed before the Flux bootstrap command is run, otherwise the `external-secrets` controller will not be able to access the Azure Key Vault.
-
+```bash
+kubectl --kubeconfig=talos/kubeconfig apply -f talos/production/akv-secret.yaml
 ```
-kubectl apply -f azure-secret-creds.yaml
+
+---
+
+# Flux Setup
+
+```bash
+export GITHUB_TOKEN=<GITHUB_TOKEN>
+flux bootstrap github --token-auth --owner=jonathanruiz --repository=homelab --branch=main --path=./clusters/production --personal
 ```
