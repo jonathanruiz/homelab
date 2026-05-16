@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: garage
-          image: ghcr.io/deuxfleurs/garage:v1.0.1
+          image: dxflrs/garage:v2.3.0
           ports:
             - containerPort: 3900
               name: s3-api
