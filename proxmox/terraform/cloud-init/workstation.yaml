@@ -27,19 +27,10 @@ packages:
   - ca-certificates
   - gnupg
   - htop
-  - gnome-core
-  - xrdp
-  - firefox-esr
-  - dbus-x11
 
 runcmd:
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
-  - echo "gnome-session" > /home/${workstation_username}/.xsession
-  - chmod +x /home/${workstation_username}/.xsession
-  - chown ${workstation_username}:${workstation_username} /home/${workstation_username}/.xsession
-  - usermod -aG ssl-cert xrdp
-  - systemctl enable --now xrdp
 
 timezone: ${timezone}
 locale: en_US.UTF-8

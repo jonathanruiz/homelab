@@ -1,6 +1,9 @@
 talos/
 .DS_Store
 
+# Ansible
+**/.env.ansible
+
 # Terraform
 **/.terraform/
 **/*.tfstate

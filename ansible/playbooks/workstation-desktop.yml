@@ -1,0 +1,35 @@
+---
+- name: Configure workstation desktop
+  hosts: workstations
+  become: true
+
+  tasks:
+    - name: Install GNOME and XRDP packages
+      ansible.builtin.apt:
+        name:
+          - gnome-core
+          - xrdp
+          - firefox-esr
+          - dbus-x11
+        state: present
+        update_cache: true
+
+    - name: Configure GNOME session for XRDP
+      ansible.builtin.copy:
+        dest: "/home/{{ ansible_user }}/.xsession"
+        content: "gnome-session\n"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0755"
+
+    - name: Add xrdp user to ssl-cert group
+      ansible.builtin.user:
+        name: xrdp
+        groups: ssl-cert
+        append: true
+
+    - name: Enable and start xrdp
+      ansible.builtin.systemd:
+        name: xrdp
+        enabled: true
+        state: started
