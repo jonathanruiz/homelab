@@ -55,8 +55,9 @@ resource "proxmox_virtual_environment_file" "cloud_init_media" {
 
   source_raw {
     data = templatefile("${path.module}/cloud-init/media.yaml", {
-      ssh_public_key = var.ssh_public_key
-      timezone       = var.timezone
+      vm_username     = var.ssh_vm_username
+      ssh_public_key  = var.ssh_public_key
+      timezone        = var.timezone
     })
     file_name = "cloud-init-media.yaml"
   }
@@ -69,8 +70,9 @@ resource "proxmox_virtual_environment_file" "cloud_init_home_ai" {
 
   source_raw {
     data = templatefile("${path.module}/cloud-init/home-ai.yaml", {
-      ssh_public_key = var.ssh_public_key
-      timezone       = var.timezone
+      vm_username     = var.ssh_vm_username
+      ssh_public_key  = var.ssh_public_key
+      timezone        = var.timezone
     })
     file_name = "cloud-init-home-ai.yaml"
   }
@@ -83,8 +85,9 @@ resource "proxmox_virtual_environment_file" "cloud_init_network" {
 
   source_raw {
     data = templatefile("${path.module}/cloud-init/network.yaml", {
-      ssh_public_key = var.ssh_public_key
-      timezone       = var.timezone
+      vm_username     = var.ssh_vm_username
+      ssh_public_key  = var.ssh_public_key
+      timezone        = var.timezone
     })
     file_name = "cloud-init-network.yaml"
   }

@@ -4,7 +4,7 @@ fqdn: vmdkr002.local.ruizops.com
 manage_etc_hosts: true
 
 users:
-  - name: deploy
+  - name: ${vm_username}
     groups: [sudo, docker]
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL

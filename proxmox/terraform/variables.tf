@@ -39,6 +39,12 @@ variable "snippets_datastore" {
   default     = "local"
 }
 
+variable "ssh_vm_username" {
+  description = "Login username for the Docker VMs (used for SSH)"
+  type        = string
+  sensitive   = true
+}
+
 variable "ssh_public_key" {
   description = "SSH public key injected into all VMs for the deploy user"
   type        = string

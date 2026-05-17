@@ -13,8 +13,10 @@ users:
       - ${ssh_public_key}
 
 chpasswd:
-  list: |
-    ${workstation_username}:${workstation_password}
+  users:
+    - name: ${workstation_username}
+      password: ${workstation_password}
+      type: hash
   expire: false
 
 package_update: true
@@ -23,6 +25,7 @@ packages:
   - qemu-guest-agent
   - curl
   - ca-certificates
+  - gnupg
   - htop
   - gnome-core
   - xrdp
@@ -35,9 +38,8 @@ runcmd:
   - echo "gnome-session" > /home/${workstation_username}/.xsession
   - chmod +x /home/${workstation_username}/.xsession
   - chown ${workstation_username}:${workstation_username} /home/${workstation_username}/.xsession
-  - adduser xrdp ssl-cert
-  - systemctl enable xrdp
-  - systemctl restart xrdp
+  - usermod -aG ssl-cert xrdp
+  - systemctl enable --now xrdp
 
 timezone: ${timezone}
 locale: en_US.UTF-8
