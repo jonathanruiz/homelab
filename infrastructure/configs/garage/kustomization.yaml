@@ -4,3 +4,4 @@ resources:
   - ingressroute.yaml
   - job-init-rbac.yaml
   - job-init.yaml
+  - networkpolicy.yaml
