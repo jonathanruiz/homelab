@@ -8,5 +8,6 @@ spec:
   subnetRouter:
     advertiseRoutes:
       - "10.0.10.0/24"   # node network
+      - "10.0.50.0/24"   # workstations
       - "10.244.0.0/16"  # pod CIDR
       - "10.96.0.0/12"   # service CIDR
