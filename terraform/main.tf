@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "terraform-state"
-    key    = "proxmox/terraform.tfstate"
+    key    = "terraform/terraform.tfstate"
     region = "garage"
     endpoint                    = "https://garage.local.ruizops.com"
     skip_credentials_validation = true
