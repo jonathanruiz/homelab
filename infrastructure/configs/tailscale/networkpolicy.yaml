@@ -67,6 +67,10 @@ spec:
             cidr: 10.96.0.0/12   # service CIDR
         - ipBlock:
             cidr: 10.0.10.0/24   # node network
+        - ipBlock:
+            cidr: 10.0.50.0/24   # workstations
+        - ipBlock:
+            cidr: 10.0.30.0/24   # service nodes
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
