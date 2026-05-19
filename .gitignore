@@ -2,6 +2,7 @@ talos/
 .DS_Store
 
 # Ansible
+.ansible/
 **/.env.ansible
 
 # Terraform
