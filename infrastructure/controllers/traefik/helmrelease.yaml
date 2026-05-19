@@ -42,6 +42,10 @@ spec:
       - "--global.checknewversion=false" # Disable version check
       - "--global.sendanonymoususage=false" # Disable anonymous usage statistics
 
+    logs:
+      access:
+        enabled: true
+
     additionalArguments:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
       - "--log.level=INFO" # Set log level to INFO
