@@ -40,6 +40,7 @@ resource "proxmox_download_file" "debian_13_cloud" {
   node_name    = var.proxmox_node
   url          = "https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
   file_name    = "debian-13-genericcloud-amd64.img"
+  overwrite    = false # prevents size mismatch on upstream image updates from forcing replacement of all VMs
 }
 
 # ---------------------------------------------------------------------------
