@@ -38,10 +38,6 @@ spec:
         mountPath: /etc/crowdsec
         readOnly: true
 
-    globalArguments:
-      - "--global.checknewversion=false" # Disable version check
-      - "--global.sendanonymoususage=false" # Disable anonymous usage statistics
-
     logs:
       access:
         enabled: true
@@ -49,6 +45,8 @@ spec:
     additionalArguments:
       - "--providers.kubernetescrd" # Enable Kubernetes CRD provider
       - "--log.level=INFO" # Set log level to INFO
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
       # Traefik resolves the real client IP from X-Forwarded-For before the CrowdSec
       # plugin sees the request. Pod CIDR covers cloudflared pods; Cloudflare ranges
       # cover the edge IPs that cloudflared may include in X-Forwarded-For.
@@ -57,11 +55,9 @@ spec:
 
     ports:
       web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+        redirectTo:
+          port: websecure
+          permanent: true
       ssh:
         port: 22
         expose:
