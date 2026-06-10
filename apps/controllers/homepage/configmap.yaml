@@ -40,7 +40,8 @@ data:
         - Synology:
             - abbr: SY
               href: https://synology.local.ruizops.com
-  services.yaml: ""
+  services.yaml: |
+    []
   widgets.yaml: |
     - search:
         provider: google
