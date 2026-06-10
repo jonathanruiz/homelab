@@ -27,7 +27,29 @@ spec:
     referrerPolicy: "strict-origin-when-cross-origin"
     permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=()"
 ---
-# Chain — CrowdSec runs first, then headers are set
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: it-tools-forwardauth
+  namespace: it-tools
+spec:
+  forwardAuth:
+    address: http://authentik-server.authentik.svc.cluster.local/outpost.goauthentik.io/auth/traefik
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-authentik-username
+      - X-authentik-groups
+      - X-authentik-email
+      - X-authentik-name
+      - X-authentik-uid
+      - X-authentik-jwt
+      - X-authentik-meta-jwks
+      - X-authentik-meta-outpost
+      - X-authentik-meta-provider
+      - X-authentik-meta-app
+      - X-authentik-meta-version
+---
+# Chain — CrowdSec blocks bad IPs, ForwardAuth enforces login, then security headers
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
@@ -37,4 +59,5 @@ spec:
   chain:
     middlewares:
       - name: crowdsec-bouncer
+      - name: it-tools-forwardauth
       - name: it-tools-security-headers

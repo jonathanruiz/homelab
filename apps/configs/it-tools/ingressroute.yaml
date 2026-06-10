@@ -7,6 +7,28 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # Authentik outpost callback — must be handled by Authentik, not it-tools.
+    # Higher priority so these paths are never intercepted by the ForwardAuth middleware.
+    - match: Host(`it-tools.ruizops.com`) && PathPrefix(`/outpost.goauthentik.io/`)
+      kind: Rule
+      priority: 200
+      middlewares:
+        - name: crowdsec-bouncer
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: 80
+
+    - match: Host(`it-tools.local.ruizops.com`) && PathPrefix(`/outpost.goauthentik.io/`)
+      kind: Rule
+      priority: 200
+      middlewares:
+        - name: crowdsec-bouncer
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: 80
+
     # Public route — full middleware chain (CrowdSec + security headers)
     - match: Host(`it-tools.ruizops.com`)
       kind: Rule
