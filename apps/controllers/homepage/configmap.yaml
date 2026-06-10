@@ -25,6 +25,9 @@ data:
             - abbr: N8
               href: https://n8n.local.ruizops.com
     - Infrastructure:
+        - Authentik:
+            - abbr: AK
+              href: https://authentik.local.ruizops.com
         - Traefik:
             - abbr: TR
               href: https://traefik.local.ruizops.com/dashboard/
