@@ -27,7 +27,7 @@ data:
     - Infrastructure:
         - Authentik:
             - abbr: AK
-              href: https://authentik.local.ruizops.com
+              href: https://auth.local.ruizops.com
         - Traefik:
             - abbr: TR
               href: https://traefik.local.ruizops.com/dashboard/

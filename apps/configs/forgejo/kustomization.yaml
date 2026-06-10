@@ -1,6 +1,7 @@
 resources:
   - certificate.yaml
   - externalsecret.yaml
+  - externalsecret-oauth.yaml
   - middleware.yaml
   - ingressroute.yaml
   - networkpolicy.yaml

@@ -18,6 +18,12 @@ spec:
     gitea:
       admin:
         existingSecret: forgejo-admin-credentials
+      oauth:
+        - name: authentik
+          provider: openidConnect
+          existingSecret: forgejo-oauth-credentials
+          autoDiscoverUrl: https://auth.local.ruizops.com/application/o/forgejo/.well-known/openid-configuration
+          scopes: "openid email profile"
       config:
         server:
           DOMAIN: forgejo.ruizops.com
