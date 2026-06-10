@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  interval: 12h
+  chart:
+    spec:
+      chart: authentik
+      version: "2026.5.2"
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: authentik
+      interval: 12h
+  values:
+    authentik:
+      log_level: info
+      existingSecret:
+        secretName: authentik-secrets
+
+    server:
+      ingress:
+        enabled: false
+
+    postgresql:
+      enabled: true
+      auth:
+        username: authentik
+        database: authentik
+        existingSecret: authentik-secrets
+        secretKeys:
+          adminPasswordKey: POSTGRES_PASSWORD
+          userPasswordKey: POSTGRES_PASSWORD
+      primary:
+        persistence:
+          enabled: true
+          storageClass: nfs-database
+          size: 8Gi
