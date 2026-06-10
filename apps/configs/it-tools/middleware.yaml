@@ -10,3 +10,31 @@ spec:
       crowdsecMode: stream
       crowdsecLapiHost: crowdsec-service.crowdsec.svc.cluster.local:8080
       crowdsecLapiKeyFile: /etc/crowdsec/api-key
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: it-tools-security-headers
+  namespace: it-tools
+spec:
+  headers:
+    frameDeny: true
+    contentTypeNosniff: true
+    forceSTSHeader: true
+    stsSeconds: 31536000
+    stsIncludeSubdomains: true
+    stsPreload: true
+    referrerPolicy: "strict-origin-when-cross-origin"
+    permissionsPolicy: "camera=(), microphone=(), geolocation=(), payment=()"
+---
+# Chain — CrowdSec runs first, then headers are set
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: it-tools-chain
+  namespace: it-tools
+spec:
+  chain:
+    middlewares:
+      - name: crowdsec-bouncer
+      - name: it-tools-security-headers

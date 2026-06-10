@@ -7,11 +7,25 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`it-tools.local.ruizops.com`) || Host(`it-tools.ruizops.com`)
+    # Public route — full middleware chain (CrowdSec + security headers)
+    - match: Host(`it-tools.ruizops.com`)
       kind: Rule
       priority: 100
       middlewares:
-        - name: crowdsec-bouncer
+        - name: it-tools-chain
+      services:
+        - name: it-tools
+          namespace: it-tools
+          port: 80
+
+    # Internal/Tailscale route — security headers still apply, CrowdSec still runs.
+    # Priority is lower so the public route takes precedence if both match
+    # (they won't in practice since hostnames differ, but explicit is better).
+    - match: Host(`it-tools.local.ruizops.com`)
+      kind: Rule
+      priority: 90
+      middlewares:
+        - name: it-tools-chain
       services:
         - name: it-tools
           namespace: it-tools
