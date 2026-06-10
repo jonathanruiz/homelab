@@ -1,5 +1,0 @@
-resources:
-  - certificate.yaml
-  - externalsecret.yaml
-  - ingressroute.yaml
-  - networkpolicy.yaml

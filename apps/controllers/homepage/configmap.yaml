@@ -17,9 +17,6 @@ data:
         - Grafana:
             - abbr: GF
               href: https://grafana.local.ruizops.com
-        - Checkmate:
-            - abbr: CM
-              href: https://checkmate.local.ruizops.com
     - Automation:
         - n8n:
             - abbr: N8
@@ -34,9 +31,6 @@ data:
         - Forgejo:
             - abbr: FJ
               href: https://forgejo.local.ruizops.com
-        - Netbox:
-            - abbr: NB
-              href: https://netbox.local.ruizops.com
         - IT Tools:
             - abbr: IT
               href: https://it-tools.local.ruizops.com
