@@ -23,6 +23,7 @@ spec:
           provider: openidConnect
           existingSecret: forgejo-oauth-credentials
           autoDiscoverUrl: https://auth.local.ruizops.com/application/o/forgejo/.well-known/openid-configuration
+          iconURL: "https://auth.local.ruizops.com/static/dist/assets/icons/icon.png"
           scopes: "openid email profile"
       config:
         server:
@@ -39,6 +40,9 @@ spec:
           # Prevent user enumeration: the "forgot password" flow should not
           # reveal whether an email address exists in the system
           SHOW_REGISTRATION_BUTTON: "false"
+          ENABLE_INTERNAL_SIGNIN: "false"
+          # Disallow standard passwords for API token endpoints
+          ENABLE_BASIC_AUTHENTICATION: "false"
 
         # --- Session & cookie hardening ---
         # Protects YOUR admin session when you're logged in.
